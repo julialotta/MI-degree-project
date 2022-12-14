@@ -13,15 +13,18 @@ export const GamePage: React.FC = () => {
     if (i === 1) {
       let score = 0;
       const FLOOR_HEIGHT = 48;
-      const JUMP_FORCE = 900;
-      const SPEED = 480;
+      const JUMP_FORCE = 1000;
+      //const SPEED = 480;
 
       k = kaboom({
         global: true,
         canvas: canvas,
       });
       k.loadRoot("https://i.imgur.com/");
-      k.loadSprite("player", "Wb1qfhK.png");
+
+      k.loadSprite("player", "6Oz1wwa.png");
+      k.loadSprite("cup", "fRznfCo.png ");
+      k.loadSprite("choco", "mvIxX5N.png ");
 
       k.scene("game", () => {
         k.layers(["bg", "game", "ui"], "game");
@@ -34,9 +37,11 @@ export const GamePage: React.FC = () => {
         const player = k.add([
           k.sprite("player"),
           k.pos(80, 40),
+          k.scale(0.3),
           k.area(),
           k.body(),
         ]);
+        k.add([k.sprite("cup"), k.pos(80, 40), k.area()]);
         // add platform
         k.add([
           k.rect(width(), FLOOR_HEIGHT),

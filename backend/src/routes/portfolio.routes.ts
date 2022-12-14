@@ -1,9 +1,13 @@
 import express, { Router } from "express";
-import { get_gameByIDController } from "../controllers/game.controller";
+import {
+  get_portfolioProjectByID,
+  get_portfolioProjects,
+} from "../controllers/portfolio.controller";
 
 const router: Router = express.Router();
 
-router.get("/", get_gameByIDController);
+router.get("/", get_portfolioProjects);
+router.get("/:id", get_portfolioProjectByID);
 /* router.post("/newscore", post_newBookingsController);
 router.get("/highscore", get_bookingByIdController); */
 
