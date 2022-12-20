@@ -1,9 +1,10 @@
 export const colors = {
-  white: "#ede5d7",
-  green: "#99a27b",
-  red: "#9c5026",
-  orange: "#bf7616",
+  yellow: "#feea87",
   black: "#000000",
+  orange: "#E37C02",
+  pink: "#E37C02",
+  white: "#ffffff",
+  red: "#E42416",
 };
 
 const sizes = {

@@ -1,69 +1,300 @@
-import { GlobalStyle } from "../components/style/fonts";
-import { colors } from "../components/style/Mixins";
-import { StyledH1, StyledP } from "../components/style/StyledTextElements";
-import { FlexDiv } from "../components/style/Wrappers";
-import { motion } from "framer-motion";
-import { NoiseDiv } from "../components/NoiseDiv";
+import kaboom from "kaboom";
+import * as React from "react";
 
-export const Home = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <FlexDiv position='relative' background={colors.green} minHeight='100vh'>
-        <NoiseDiv className='noise' />
-        <FlexDiv dir='column' width='100%' align='left' z='1'>
-          <StyledH1
-            as={motion.h1}
-            drag
-            fontSize='100px'
-            tabletFontSize='170px'
-            lineheight='100px'
-            tabletLineheight='170px'
-            textAlign='left'
-          >
-            Hi, I'm <br /> Julia-Lotta
-          </StyledH1>
+export const Home: React.FC = () => {
+  const canvas = document.getElementById("mycanvas") as HTMLCanvasElement;
 
-          <StyledP
-            fontSize='35px'
-            textAlign='left'
-            lineheight='35px'
-            style={{ display: "inline" }}
-          >
-            I'm an aspiring
-            <StyledP
-              as={motion.p}
-              drag
-              style={{ display: "inline" }}
-              fontSize='35px'
-              lineheight='35px'
-              hover='pointer'
-            >
-              <strong>Front End Developer</strong>{" "}
-            </StyledP>
-            currently studying at Medieinstitutet in Stockholm, Sweden. Prior to
-            my studies I worked as a project &#38; marketing manager at the
-            music company Jubel. I had a lot of fun there, but to be honest I
-            think coding is more fun than sending e-mails. I think I think that
-            because I like to
-            <StyledP
-              as={motion.p}
-              drag
-              style={{ display: "inline" }}
-              fontSize='35px'
-              lineheight='35px'
-              hover='pointer'
-            >
-              <strong>create stuff</strong>
-            </StyledP>
-            and see them grow. Kind of like writing a song, only it's easier to
-            know if you're any good at it. Along with my studies I've already
-            built some stuff that I'm kind of proud of. I built an App in React
-            Native while learning to code. I guess you can kind of say that that
-            project was what taught me how to code.
-          </StyledP>
-        </FlexDiv>
-      </FlexDiv>
-    </>
-  );
+  let i = 0;
+
+  React.useEffect(() => {
+    i++;
+
+    if (i === 1) {
+      let score = 0;
+      const FLOOR_HEIGHT = 48;
+      const JUMP_FORCE = 1100;
+      const MOVE_SPEED = 480;
+
+      let k: any = kaboom({
+        global: true,
+        canvas: canvas,
+        background: [0, 0, 255],
+        debug: true,
+      });
+
+      //IMAGES
+      k.loadRoot("https://i.imgur.com/");
+      k.loadFont("press", "nkLV4Pb.png", 30, 30);
+      k.loadSprite("player", "lMmlXVs.png");
+      k.loadSprite("cup", "fRznfCo.png ");
+      k.loadSprite("choco", "mvIxX5N.png ");
+      k.loadSprite("bug", "RgKbtYC.png ");
+      k.loadSprite("brick", "jLKUZ1N.png ");
+      k.loadSprite("surprise", "sH6HHZN.png ");
+      k.loadSprite("life", "z4haxpk.png ");
+      k.loadSprite("background", "ePsjzsd.png");
+      k.loadSprite("lostbackground", "U1udZou.png");
+
+      k.scene("start", () => {
+        k.layers(["bg", "game", "ui"], "game");
+        k.add([
+          k.sprite("background"),
+          k.pos(0, 0),
+          k.scale(1),
+          k.fixed(),
+          "bg",
+        ]);
+
+        k.gravity(2400);
+
+        onKeyPress("space", () => {
+          go("game1");
+          score = 0;
+        });
+        onClick(() => {
+          go("game1");
+          score = 0;
+        });
+      });
+
+      // LEVEL 1
+      k.scene("game1", () => {
+        k.layers(["bg", "game", "ui"], "game");
+        k.add([
+          k.sprite("background"),
+          // Make the background centered on the screen
+          k.pos(0, 0),
+
+          // Allow the background to be scaled
+          k.scale(1),
+          // Keep the background position fixed even when the camera moves
+          k.fixed(),
+          "bg",
+        ]);
+        const player = k.add([
+          k.sprite("player"),
+          k.pos(80, 40),
+          k.scale(0.11),
+          k.area(),
+          k.body(),
+        ]);
+        k.onKeyPress("space", () => {
+          if (player.isGrounded()) {
+            player.jump(JUMP_FORCE);
+          }
+        });
+        k.onKeyDown("left", () => {
+          player.move(-MOVE_SPEED, 0);
+        });
+
+        k.onKeyDown("right", () => {
+          player.move(MOVE_SPEED, 0);
+        });
+
+        k.addLevel(
+          [
+            "                        ",
+            "                        ",
+            "                        ",
+            "                        ",
+            "                        ",
+            "                        ",
+            "                        ",
+            "          $             ",
+            "                     =  ",
+            "========================",
+          ],
+          {
+            // define the size of each block
+            width: 48,
+            height: 70,
+            // define what each symbol means, by a function returning a component list (what will be passed to add())
+            "=": () => [sprite("brick"), area(), solid(), scale(0.2), "ui"],
+            $: () => [
+              sprite("surprise"),
+              area(),
+              pos(0, -9),
+              scale(0.2),
+              solid(),
+            ],
+            "^": () => [sprite("cup"), area(), scale(0.1)],
+            "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
+          }
+        );
+        /*  
+
+        k.gravity(2400);
+
+        const scoreLabel = k.add([
+          k.text(score.toString(), { font: "press" }),
+          k.pos(24, 24),
+          k.color(254, 136, 213),
+        ]);
+
+        //player
+        const player = k.add([
+          k.sprite("player"),
+          k.pos(80, 40),
+          k.scale(0.11),
+          k.area(),
+          k.body(),
+        ]);
+        k.add([k.sprite("cup"), k.scale(0.1), k.pos(80, 40), k.area()]);
+        // add platform
+        k.add([
+          k.rect(width(), FLOOR_HEIGHT),
+          k.pos(0, k.height() - 50),
+          k.outline(4),
+          k.area(),
+          k.solid(),
+          k.color(127, 300, 255),
+        ]);
+
+        
+
+        player.onCollide("bug", () => {
+          //player.destroy();
+          k.shake(5);
+          k.addKaboom(player.pos);
+          k.go("lose");
+        });
+
+        k.onUpdate(() => {
+          score++;
+          scoreLabel.text = score.toString();
+        });
+        spawnTree();
+
+        function spawnTree() {
+          //bug
+          k.add([
+            k.sprite("bug"),
+            //k.rect(50, k.rand(24, 64)),
+            k.scale(k.rand(0.09, 0.13)),
+            k.area(),
+            k.pos(k.width(), k.height() - 50),
+            k.origin("botleft"),
+            k.move(k.LEFT, 220),
+            "bug", // add a tag here
+          ]);
+          k.wait(k.rand(1.5, 2), () => {
+            spawnTree();
+          });
+        } */
+      });
+
+      // LEVEL 2
+      k.scene("game2", () => {
+        k.layers(["bg", "game", "ui"], "game");
+        k.add([
+          k.sprite("background"),
+          k.pos(0, 0),
+          k.scale(1),
+          k.fixed(),
+          "bg",
+        ]);
+
+        k.gravity(2400);
+
+        const scoreLabel = k.add([
+          k.text(score.toString(), { font: "press" }),
+          k.pos(24, 24),
+          k.color(254, 136, 213),
+        ]);
+
+        //player
+        const player = k.add([
+          k.sprite("player"),
+          k.pos(80, 40),
+          k.scale(0.11),
+          k.area(),
+          k.body(),
+        ]);
+        k.add([k.sprite("cup"), k.scale(0.1), k.pos(80, 40), k.area()]);
+        // add platform
+        k.add([
+          k.rect(width(), FLOOR_HEIGHT),
+          k.pos(0, k.height() - 50),
+          k.outline(4),
+          k.area(),
+          k.solid(),
+          k.color(127, 300, 255),
+        ]);
+
+        k.onKeyPress("space", () => {
+          if (player.isGrounded()) {
+            player.jump(JUMP_FORCE);
+          }
+        });
+
+        player.onCollide("bug", () => {
+          //player.destroy();
+          k.shake(5);
+          k.addKaboom(player.pos);
+          k.go("lose");
+        });
+
+        k.onUpdate(() => {
+          score++;
+          scoreLabel.text = score.toString();
+        });
+        spawnTree();
+
+        function spawnTree() {
+          //bug
+          k.add([
+            k.sprite("bug"),
+            //k.rect(50, k.rand(24, 64)),
+            k.scale(k.rand(0.09, 0.13)),
+            k.area(),
+            k.pos(k.width(), k.height() - 50),
+            k.origin("botleft"),
+            k.move(k.LEFT, 220),
+            "bug", // add a tag here
+          ]);
+          k.wait(k.rand(1.5, 2), () => {
+            spawnTree();
+          });
+        }
+      });
+
+      //LOOSING SCREEN
+      k.scene("lose", () => {
+        k.add([
+          k.sprite("lostbackground"),
+          k.pos(0, 0),
+          k.scale(1),
+          k.fixed(),
+          "bg",
+        ]);
+        const textbox = k.add([
+          k.rect(k.width() - 180, 250, { radius: 32 }),
+          k.origin("center"),
+          k.pos(k.center().x, k.height().y),
+          k.outline(4),
+          k.color(210, 242, 221),
+        ]);
+        k.add([
+          k.text("Score:" + score.toString() + "\n\nGame Over :("),
+          { size: 82, width: k.width() - 300, align: "center", font: "press" },
+          pos(textbox.pos),
+          k.color(254, 136, 213),
+          k.origin("center"),
+        ]);
+
+        onKeyPress("space", () => {
+          go("start");
+          score = 0;
+        });
+        onClick(() => {
+          go("start");
+          score = 0;
+        });
+      });
+
+      k.go("start");
+    }
+  });
+
+  return <></>;
 };

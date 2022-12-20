@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IStylingProps } from "./StyledInterface";
 import { colors, device } from "./Mixins";
@@ -6,6 +6,20 @@ import { colors, device } from "./Mixins";
 export const StyledH1 = styled.h1`
   color: ${(props: IStylingProps) => props.color || colors.black};
   text-decoration: none;
+  text-align: ${(props: IStylingProps) => props.textAlign || 0};
+  font-size: ${(props: IStylingProps) => props.fontSize || "44px"};
+  margin: ${(props: IStylingProps) => props.margin || "0px"};
+  line-height: ${(props: IStylingProps) => props.lineheight || "default"};
+  @media ${device.tablet} {
+    line-height: ${(props: IStylingProps) =>
+      props.tabletLineheight || props.lineheight};
+    font-size: ${(props: IStylingProps) =>
+      props.tabletFontSize || props.fontSize};
+  }
+`;
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${(props: IStylingProps) => props.color || colors.black};
   text-align: ${(props: IStylingProps) => props.textAlign || 0};
   font-size: ${(props: IStylingProps) => props.fontSize || "44px"};
   margin: ${(props: IStylingProps) => props.margin || "0px"};
@@ -80,28 +94,6 @@ export const StyledP = styled.p`
     cursor: ${(props: IStylingProps) => props.hover || "default"};
   }
 `;
-export const StyledSpan = styled.span``;
-
-export const StyledNavLink = styled(NavLink)`
-  color: ${(props: IStylingProps) => props.color || colors.orange};
-  font-size: ${(props: IStylingProps) => props.fontSize || "15px"};
-  text-align: center;
-  line-height: 22px;
-  margin: ${(props: IStylingProps) => props.margin || "5px"};
-  text-shadow: ${(props: IStylingProps) => props.shadow || 0};
-  text-decoration: none;
-  :hover {
-    color: ${(props: IStylingProps) => props.hovercolor || props.color};
-  }
-  &.active {
-    color: ${colors.red};
-  }
-  @media ${device.tablet} {
-    &.active {
-      color: ${colors.black};
-    }
-  }
-`;
 
 export const StyledA = styled.a`
   color: ${(props: IStylingProps) => props.color || colors.black};
@@ -110,6 +102,6 @@ export const StyledA = styled.a`
   text-decoration: none;
 
   :hover {
-    color: ${(props: IStylingProps) => props.hovercolor || colors.red};
+    color: ${(props: IStylingProps) => props.hovercolor || colors.pink};
   }
 `;

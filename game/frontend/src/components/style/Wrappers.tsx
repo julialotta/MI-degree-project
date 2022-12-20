@@ -38,7 +38,7 @@ export const ImageDiv = styled(FlexDiv)`
 `;
 
 export const AppWrapper = styled.div`
-  background-color: ${colors.white};
+  background-color: ${colors.yellow};
   width: 100%;
   min-height: min-content;
   padding: 0;

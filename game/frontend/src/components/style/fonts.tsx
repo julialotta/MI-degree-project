@@ -1,12 +1,12 @@
-import Abril from "../../fonts/AbrilFatface-Regular.ttf";
+import PressStart from "../../fonts/PressStart.ttf";
 import FuturaLight from "../../fonts/FuturaLightBT.ttf";
 import FuturaBook from "../../fonts/FuturaPTBook.otf";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'Abril';
-    src: url(${Abril}) format('truetype');
+    font-family: 'PressStart';
+    src: url(${PressStart}) format('truetype');
     
   }
   @font-face {
@@ -20,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   h1,h2 {
-    font-family: 'Abril';
+    font-family: 'PressStart';
   }
 
   h3, h4,h5 {
