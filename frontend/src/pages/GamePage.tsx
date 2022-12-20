@@ -13,21 +13,35 @@ export const GamePage: React.FC = () => {
     if (i === 1) {
       let score = 0;
       const FLOOR_HEIGHT = 48;
-      const JUMP_FORCE = 1000;
+      const JUMP_FORCE = 1100;
       //const SPEED = 480;
 
       k = kaboom({
         global: true,
         canvas: canvas,
+        background: [0, 0, 255],
       });
       k.loadRoot("https://i.imgur.com/");
 
-      k.loadSprite("player", "6Oz1wwa.png");
+      k.loadSprite("player", "lMmlXVs.png");
       k.loadSprite("cup", "fRznfCo.png ");
       k.loadSprite("choco", "mvIxX5N.png ");
+      k.loadSprite("bug", "RgKbtYC.png ");
+      k.loadSprite("background", "iW1NopS.png");
 
       k.scene("game", () => {
         k.layers(["bg", "game", "ui"], "game");
+        k.add([
+          k.sprite("background"),
+          // Make the background centered on the screen
+          k.pos(0, 0),
+
+          // Allow the background to be scaled
+          k.scale(1),
+          // Keep the background position fixed even when the camera moves
+          k.fixed(),
+          "bg",
+        ]);
 
         k.gravity(2400);
 
@@ -37,20 +51,19 @@ export const GamePage: React.FC = () => {
         const player = k.add([
           k.sprite("player"),
           k.pos(80, 40),
-          k.scale(0.3),
+          k.scale(0.11),
           k.area(),
           k.body(),
         ]);
-        k.add([k.sprite("cup"), k.pos(80, 40), k.area()]);
+        k.add([k.sprite("cup"), k.scale(0.1), k.pos(80, 40), k.area()]);
         // add platform
         k.add([
           k.rect(width(), FLOOR_HEIGHT),
-
           k.pos(0, k.height() - 50),
           k.outline(4),
           k.area(),
           k.solid(),
-          k.color(127, 200, 255),
+          k.color(127, 300, 255),
         ]);
 
         k.onKeyPress("space", () => {
@@ -59,7 +72,7 @@ export const GamePage: React.FC = () => {
           }
         });
 
-        player.onCollide("tree", () => {
+        player.onCollide("bug", () => {
           //player.destroy();
           k.shake(5);
           k.addKaboom(player.pos);
@@ -73,24 +86,35 @@ export const GamePage: React.FC = () => {
         spawnTree();
 
         function spawnTree() {
-          //tree
+          //bug
           k.add([
-            k.rect(50, k.rand(24, 64)),
+            k.sprite("bug"),
+            //k.rect(50, k.rand(24, 64)),
+            k.scale(k.rand(0.09, 0.13)),
             k.area(),
-            k.outline(4),
             k.pos(k.width(), k.height() - 50),
             k.origin("botleft"),
-            k.color(255, 180, 255),
             k.move(k.LEFT, 220),
-            "tree", // add a tag here
+            "bug", // add a tag here
           ]);
-          k.wait(k.rand(1, 1.5), () => {
+          k.wait(k.rand(1.5, 2), () => {
             spawnTree();
           });
         }
       });
 
       k.scene("lose", () => {
+        k.add([
+          k.sprite("background"),
+          // Make the background centered on the screen
+          k.pos(0, 0),
+
+          // Allow the background to be scaled
+          k.scale(1),
+          // Keep the background position fixed even when the camera moves
+          k.fixed(),
+          "bg",
+        ]);
         k.add([k.text("Game Over :("), k.pos(k.center()), k.origin("center")]);
         k.add([
           k.text(score),
