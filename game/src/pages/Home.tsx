@@ -1,5 +1,6 @@
 import kaboom from "kaboom";
 import * as React from "react";
+import { levels } from "../components/gameComponents/Levels";
 
 export const Home: React.FC = () => {
   const canvas = document.getElementById("mycanvas") as HTMLCanvasElement;
@@ -11,7 +12,7 @@ export const Home: React.FC = () => {
 
     if (i === 1) {
       let score = 0;
-      const FLOOR_HEIGHT = 48;
+      //const FLOOR_HEIGHT = 48;
       const JUMP_FORCE = 1100;
       const MOVE_SPEED = 480;
 
@@ -37,40 +38,25 @@ export const Home: React.FC = () => {
 
       k.scene("start", () => {
         k.layers(["bg", "game", "ui"], "game");
-        k.add([
-          k.sprite("background"),
-          k.pos(0, 0),
-          k.scale(1),
-          k.fixed(),
-          "bg",
-        ]);
+        k.add([k.sprite("background"), k.pos(0, 0), k.scale(1), "bg"]);
 
         k.gravity(2400);
 
         onKeyPress("space", () => {
-          go("game1");
+          go("game");
           score = 0;
         });
         onClick(() => {
-          go("game1");
+          go("game");
           score = 0;
         });
       });
 
       // LEVEL 1
-      k.scene("game1", () => {
+      k.scene("game", () => {
+        let levelIdx: number = 0;
         k.layers(["bg", "game", "ui"], "game");
-        k.add([
-          k.sprite("background"),
-          // Make the background centered on the screen
-          k.pos(0, 0),
-
-          // Allow the background to be scaled
-          k.scale(1),
-          // Keep the background position fixed even when the camera moves
-          k.fixed(),
-          "bg",
-        ]);
+        k.add([k.sprite("background"), k.pos(0, 0), k.scale(1), "bg"]);
         const player = k.add([
           k.sprite("player"),
           k.pos(80, 40),
@@ -91,36 +77,22 @@ export const Home: React.FC = () => {
           player.move(MOVE_SPEED, 0);
         });
 
-        k.addLevel(
-          [
-            "                        ",
-            "                        ",
-            "                        ",
-            "                        ",
-            "                        ",
-            "                        ",
-            "                        ",
-            "          $             ",
-            "                     =  ",
-            "========================",
+        k.addLevel(levels[levelIdx], {
+          width: 64,
+          height: 64,
+          pos: vec2(64, 64),
+
+          "=": () => [sprite("brick"), area(), solid(), scale(0.2), "ui"],
+          $: () => [
+            sprite("surprise"),
+            area(),
+            pos(0, -9),
+            scale(0.2),
+            solid(),
           ],
-          {
-            // define the size of each block
-            width: 48,
-            height: 70,
-            // define what each symbol means, by a function returning a component list (what will be passed to add())
-            "=": () => [sprite("brick"), area(), solid(), scale(0.2), "ui"],
-            $: () => [
-              sprite("surprise"),
-              area(),
-              pos(0, -9),
-              scale(0.2),
-              solid(),
-            ],
-            "^": () => [sprite("cup"), area(), scale(0.1)],
-            "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
-          }
-        );
+          "^": () => [sprite("cup"), area(), scale(0.1)],
+          "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
+        });
         /*  
 
         k.gravity(2400);
@@ -181,81 +153,6 @@ export const Home: React.FC = () => {
             spawnTree();
           });
         } */
-      });
-
-      // LEVEL 2
-      k.scene("game2", () => {
-        k.layers(["bg", "game", "ui"], "game");
-        k.add([
-          k.sprite("background"),
-          k.pos(0, 0),
-          k.scale(1),
-          k.fixed(),
-          "bg",
-        ]);
-
-        k.gravity(2400);
-
-        const scoreLabel = k.add([
-          k.text(score.toString(), { font: "press" }),
-          k.pos(24, 24),
-          k.color(254, 136, 213),
-        ]);
-
-        //player
-        const player = k.add([
-          k.sprite("player"),
-          k.pos(80, 40),
-          k.scale(0.11),
-          k.area(),
-          k.body(),
-        ]);
-        k.add([k.sprite("cup"), k.scale(0.1), k.pos(80, 40), k.area()]);
-        // add platform
-        k.add([
-          k.rect(width(), FLOOR_HEIGHT),
-          k.pos(0, k.height() - 50),
-          k.outline(4),
-          k.area(),
-          k.solid(),
-          k.color(127, 300, 255),
-        ]);
-
-        k.onKeyPress("space", () => {
-          if (player.isGrounded()) {
-            player.jump(JUMP_FORCE);
-          }
-        });
-
-        player.onCollide("bug", () => {
-          //player.destroy();
-          k.shake(5);
-          k.addKaboom(player.pos);
-          k.go("lose");
-        });
-
-        k.onUpdate(() => {
-          score++;
-          scoreLabel.text = score.toString();
-        });
-        spawnTree();
-
-        function spawnTree() {
-          //bug
-          k.add([
-            k.sprite("bug"),
-            //k.rect(50, k.rand(24, 64)),
-            k.scale(k.rand(0.09, 0.13)),
-            k.area(),
-            k.pos(k.width(), k.height() - 50),
-            k.origin("botleft"),
-            k.move(k.LEFT, 220),
-            "bug", // add a tag here
-          ]);
-          k.wait(k.rand(1.5, 2), () => {
-            spawnTree();
-          });
-        }
       });
 
       //LOOSING SCREEN
