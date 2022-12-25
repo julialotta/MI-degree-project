@@ -18,6 +18,7 @@ const StyledBurger = styled.div`
   align-items: center;
   flex-flow: column;
   cursor: pointer;
+  z-index: 3;
 
   div {
     width: 3rem;
@@ -50,7 +51,7 @@ export const Navbar = () => {
   return (
     <>
       <StyledBurger
-        color={open ? colors.orange : colors.red}
+        color={open ? colors.orange : colors.black}
         transform1stchild={open ? "rotate(45deg)" : "rotate(0)"}
         transform2ndchild={open ? "translateX(100%)" : "translateX(0)"}
         opacity2ndchild={open ? "0" : "1"}

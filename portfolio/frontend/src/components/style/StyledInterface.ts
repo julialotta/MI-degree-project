@@ -41,4 +41,6 @@ export interface IStylingProps {
   transform2ndchild?: string;
   transform3rdchild?: string;
   opacity2ndchild?: string;
+  overflowX?: string;
+  overflowY?: string;
 }

@@ -25,6 +25,8 @@ export const FlexDiv = styled.div`
   right: ${(props: IStylingProps) => props.right || "x"};
   box-shadow: ${(props: IStylingProps) => props.shadow || 0};
   min-height: ${(props: IStylingProps) => props.minHeight || 0};
+  overflow-x: ${(props: IStylingProps) => props.overflowX || "visible"};
+  overflow-y: ${(props: IStylingProps) => props.overflowY || "visible"};
   :hover {
     cursor: ${(props: IStylingProps) => props.hover || "default"};
   }

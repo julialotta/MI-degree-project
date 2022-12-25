@@ -1,57 +1,86 @@
 import { GlobalStyle } from "../components/style/fonts";
-import background from "../assets/background.png";
-import { FlexDiv, ImageDiv } from "../components/style/Wrappers";
+
+import profile from "../assets/profilepicture.png";
+import { FlexDiv } from "../components/style/Wrappers";
 import {
+  StyledA,
   StyledH2,
   StyledH3,
   StyledH5,
   StyledP,
 } from "../components/style/StyledTextElements";
 import { NoiseDiv } from "../components/NoiseDiv";
-import { FaReact, FaCss3Alt, FaHtml5, FaFigma } from "react-icons/fa";
-import { SiStyledcomponents, SiTypescript } from "react-icons/si";
 import { AiOutlineWoman } from "react-icons/ai";
 import { BsLaptop } from "react-icons/bs";
 import { GrLocationPin } from "react-icons/gr";
 import { MdOutlineCake } from "react-icons/md";
 import { TbCircleDot } from "react-icons/tb";
-import { IoLogoJavascript } from "react-icons/io";
+import { RxDot } from "react-icons/rx";
+import { colors } from "../components/style/Mixins";
+import { StyledImage } from "../components/style/StyledImage";
+import { tech } from "../data/projects";
 
 export const AboutPage = () => {
   return (
     <>
       <GlobalStyle />
-      <ImageDiv image={background}>
+      <FlexDiv background={colors.orange} minHeight='100vh' padding='10px'>
         <NoiseDiv className='noise' />
-        <FlexDiv dir='column'>
-          <StyledH2 fontSize='34px'>About</StyledH2>
-          <FlexDiv dir='column' align='start' width='60%' gap='10px'>
-            <StyledH3 fontSize='24px'>About</StyledH3>
-            <FlexDiv dir='column'>
-              <FlexDiv justify='start'>
-                <AiOutlineWoman />
-                <StyledP>Julia-Lotta Tinglöf</StyledP>
+        <FlexDiv dir='column' margin='10px 0 0 0'>
+          <StyledH2>About</StyledH2>
+          <FlexDiv
+            margin='40px 0'
+            dir='column'
+            align='start'
+            width='50%'
+            gap='10px'
+          >
+            <FlexDiv margin='20px 0 0 0' gap='30px' align='start'>
+              <FlexDiv dir='column' gap='10px'>
+                <FlexDiv dir='column'>
+                  <FlexDiv justify='start' gap='5px'>
+                    <AiOutlineWoman size={"14px"} />
+                    <StyledP>Julia-Lotta Tinglöf</StyledP>
+                  </FlexDiv>
+                  <FlexDiv justify='start' gap='5px'>
+                    <MdOutlineCake size={"14px"} />
+                    <StyledP> 28 y/o</StyledP>
+                  </FlexDiv>
+                  <FlexDiv justify='start' gap='5px'>
+                    <BsLaptop size={"13px"} />
+                    <StyledP>Aspiring Front End Developer</StyledP>
+                  </FlexDiv>
+                  <FlexDiv justify='start' gap='5px'>
+                    <GrLocationPin size={"14px"} />
+                    <StyledP>Stockholm, Sweden</StyledP>
+                  </FlexDiv>
+                </FlexDiv>
+                <StyledP>
+                  With experience in marketing, project management and start-ups
+                  and with curiosity as my biggest driving force, I can
+                  contribute with disciplined energy going forward. Give me
+                  wifi, some time and a cup of coffee and I’ll solve anything.
+                </StyledP>
               </FlexDiv>
-              <FlexDiv justify='start'>
-                <MdOutlineCake />
-                <StyledP>28 y/o</StyledP>
-              </FlexDiv>
-              <FlexDiv justify='start'>
-                <BsLaptop />
-                <StyledP>Aspiring Front End Developer</StyledP>
-              </FlexDiv>
-              <FlexDiv justify='start'>
-                <GrLocationPin />
-                <StyledP>Stockholm, Sweden</StyledP>
+              <FlexDiv dir='column' align='center' justify='center'>
+                <StyledImage
+                  width='200px'
+                  src={profile}
+                  alt='Julia-Lotta Tinglöf'
+                />
+                <StyledP textAlign='center'>
+                  Foto:{" "}
+                  <StyledA
+                    fontSize='18 px'
+                    href='https://www.instagram.com/robinzeijlon/'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    Robin Zeijlon
+                  </StyledA>
+                </StyledP>
               </FlexDiv>
             </FlexDiv>
-
-            <StyledP>
-              With experience in marketing, project management and start-ups and
-              with curiosity as my biggest driving force, I can contribute with
-              disciplined energy going forward. Give me wifi, some time and a
-              cup of coffee and I’ll solve anything.
-            </StyledP>
             <StyledH3 fontSize='24px'>Experience</StyledH3>
             <FlexDiv justify='start'>
               <TbCircleDot />
@@ -113,19 +142,33 @@ export const AboutPage = () => {
               education contains everything from JavaScript, version control,
               framework, html, CSS, web design and usability / UX.
             </StyledP>
+            <FlexDiv margin='0 0 0 20px' dir='column'>
+              <FlexDiv>
+                <RxDot />{" "}
+                <StyledP>
+                  Internship | Full stack developer | Istya, Paris
+                </StyledP>
+              </FlexDiv>
+              <FlexDiv>
+                <RxDot />
+                <StyledP>
+                  Internship | Front end developer | Rhyme Sthlm, Stockholm
+                </StyledP>
+              </FlexDiv>
+            </FlexDiv>
             <StyledH5 fontSize='24px'>Skills</StyledH5>
-            <FlexDiv>
-              <FaReact size='34px' />
-              <SiStyledcomponents size='34px' />
-              <FaCss3Alt size='34px' />
-              <FaHtml5 size='34px' />
-              <SiTypescript size='30px' />
-              <FaFigma size='34px' />
-              <IoLogoJavascript size='34px' />
+            <FlexDiv justify='start' width='100%' wrap='wrap'>
+              {tech.map((tech: string, i: number) => (
+                <FlexDiv width='max-content' margin='5px' key={i}>
+                  <FlexDiv border='1px solid black' borderRad='3px'>
+                    <StyledP fontSize='12px'>{tech}</StyledP>
+                  </FlexDiv>
+                </FlexDiv>
+              ))}
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-      </ImageDiv>
+      </FlexDiv>
     </>
   );
 };

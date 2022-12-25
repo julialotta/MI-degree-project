@@ -9,12 +9,12 @@ const Ul = styled.ul`
   flex-flow: row nowrap;
   padding: 0;
   li {
-    padding: 0 20px;
+    padding: 0 10px;
   }
 
   @media (max-width: 768px) {
     flex-flow: column nowrap;
-    background-color: ${colors.black};
+    background-color: ${colors.white};
     position: fixed;
     transform: ${(props: IStylingProps) => props.ultransform};
     top: -20px;
@@ -51,11 +51,6 @@ const RightNav = (props: IProps) => {
       <li>
         <StyledNavLink hovercolor={colors.red} fontSize='25px' to={"/contact"}>
           Contact
-        </StyledNavLink>
-      </li>
-      <li>
-        <StyledNavLink hovercolor={colors.red} fontSize='25px' to={"/game"}>
-          Game
         </StyledNavLink>
       </li>
     </Ul>

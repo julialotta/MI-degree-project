@@ -1,16 +1,17 @@
 import { Outlet } from "react-router-dom";
-import { AppWrapper } from "./style/Wrappers";
+import { AppWrapper, FlexDiv } from "./style/Wrappers";
 import { motion } from "framer-motion";
 import { Header } from "./partials/Header";
 
 export const Layout = () => {
   const animations = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
+    initial: { opacity: 0, x: "100vw" },
+    animate: { opacity: 1, x: "0%" },
+    exit: { opacity: 0, x: "-100vw" },
   };
   return (
     <AppWrapper>
+      <Header />
       <motion.main
         variants={animations}
         initial='initial'
@@ -18,8 +19,9 @@ export const Layout = () => {
         exit='exit'
         transition={{ duration: 0.6 }}
       >
-        <Header />
-        <Outlet />
+        <FlexDiv>
+          <Outlet />
+        </FlexDiv>
       </motion.main>
     </AppWrapper>
   );

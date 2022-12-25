@@ -9,6 +9,7 @@ export const Header = () => {
   return (
     <>
       <GlobalStyle />
+
       <FlexDiv>
         <FlexDiv margin='10px 20px' align='space-between' z='1'>
           <Link to={"/"}>

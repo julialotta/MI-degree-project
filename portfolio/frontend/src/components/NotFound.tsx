@@ -13,8 +13,7 @@ export const NotFound = () => {
         dir='column'
         position='relative'
         background={colors.white}
-        bottom='55px'
-        margin='-60px 0 0 0'
+        minHeight={"100vh"}
       >
         <StyledH3 color={colors.black}>Hoppsan! Nu blev det fel</StyledH3>
         <StyledButton>

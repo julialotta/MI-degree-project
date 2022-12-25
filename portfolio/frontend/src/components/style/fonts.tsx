@@ -21,16 +21,26 @@ export const GlobalStyle = createGlobalStyle`
   
   h1,h2 {
     font-family: 'Abril';
+      z-index: 2;
+
   }
 
   h3, h4,h5 {
     font-family: 'FuturaLight';
+          z-index: 2;
+
   }
  
 p {
   font-family: 'FuturaBook';
+        z-index: 2;
+
 }
 a, button {
   font-family: 'FuturaBook';
+        z-index: 2;
+
   }
+
+  
 `;

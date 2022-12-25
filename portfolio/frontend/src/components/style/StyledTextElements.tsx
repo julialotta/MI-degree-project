@@ -96,11 +96,6 @@ export const StyledNavLink = styled(NavLink)`
   &.active {
     color: ${colors.red};
   }
-  @media ${device.tablet} {
-    &.active {
-      color: ${colors.black};
-    }
-  }
 `;
 
 export const StyledA = styled.a`
