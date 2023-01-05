@@ -8,7 +8,6 @@ const StyledBurger = styled.div`
   width: 3rem;
   height: 2rem;
   position: fixed;
-  top: 15px;
   right: 20px;
   padding: 12px;
   background-color: ${(props: IStylingProps) => props.background};

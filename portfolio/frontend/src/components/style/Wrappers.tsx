@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { IStylingProps } from "./StyledInterface";
-import { colors } from "./Mixins";
+import { colors, device } from "./Mixins";
 
 export const FlexDiv = styled.div`
   display: flex;
@@ -12,6 +12,7 @@ export const FlexDiv = styled.div`
   background-color: ${(props: IStylingProps) => props.background || "none"};
   width: ${(props: IStylingProps) => props.width || "100%"};
   height: ${(props: IStylingProps) => props.height || "100%"};
+
   gap: ${(props: IStylingProps) => props.gap || "0"};
   margin: ${(props: IStylingProps) => props.margin || "0"};
   padding: ${(props: IStylingProps) => props.padding || "0"};
@@ -29,6 +30,29 @@ export const FlexDiv = styled.div`
   overflow-y: ${(props: IStylingProps) => props.overflowY || "visible"};
   :hover {
     cursor: ${(props: IStylingProps) => props.hover || "default"};
+  }
+  @media ${device.tablet} {
+    flex-direction: ${(props: IStylingProps) => props.tabletDir || props.dir};
+    align-items: ${(props: IStylingProps) => props.tabletAlign || props.align};
+    justify-content: ${(props: IStylingProps) =>
+      props.tabletJustify || props.justify};
+    flex-wrap: ${(props: IStylingProps) => props.tabletWrap || props.wrap};
+    width: ${(props: IStylingProps) => props.tabletWidth || props.width};
+    height: ${(props: IStylingProps) => props.tabletHeight || props.height};
+  }
+  @media ${device.laptop} {
+    flex-direction: ${(props: IStylingProps) =>
+      props.laptopDir || props.tabletDir};
+
+    align-items: ${(props: IStylingProps) =>
+      props.laptopAlign || props.tabletAlign};
+    justify-content: ${(props: IStylingProps) =>
+      props.laptopJustify || props.tabletJustify};
+    flex-wrap: ${(props: IStylingProps) =>
+      props.laptopWrap || props.tabletWrap};
+    width: ${(props: IStylingProps) => props.laptopWidth || props.tabletWidth};
+    height: ${(props: IStylingProps) =>
+      props.laptopHeight || props.tabletHeight};
   }
 `;
 

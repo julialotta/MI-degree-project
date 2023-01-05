@@ -48,11 +48,6 @@ const RightNav = (props: IProps) => {
           About
         </StyledNavLink>
       </li>
-      <li>
-        <StyledNavLink hovercolor={colors.red} fontSize='25px' to={"/contact"}>
-          Contact
-        </StyledNavLink>
-      </li>
     </Ul>
   );
 };

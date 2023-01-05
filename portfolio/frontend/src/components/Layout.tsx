@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { AppWrapper, FlexDiv } from "./style/Wrappers";
 import { motion } from "framer-motion";
 import { Header } from "./partials/Header";
+import { Footer } from "./partials/Footer";
 
 export const Layout = () => {
   const animations = {
@@ -23,6 +24,7 @@ export const Layout = () => {
           <Outlet />
         </FlexDiv>
       </motion.main>
+      <Footer />
     </AppWrapper>
   );
 };

@@ -56,55 +56,54 @@ export const ProjectsPage = () => {
             dir='column'
             justify='start'
             align='start'
-            gap='5px'
-            height='400px'
+            gap='50px'
             overflowY='scroll'
           >
             <StyledH2 textAlign='left'>Projects {projects.length}</StyledH2>
-            {projectTags.map((pt) => (
-              <FlexDiv dir='column' key={pt} height='200px'>
-                <StyledH5 key={pt} margin='20px 5px 5px 5px'>
-                  {pt}
-                </StyledH5>
-                <FlexDiv background='black' height='0.5px' />
+            <FlexDiv gap='20px' dir='column'>
+              {projectTags.map((pt) => (
+                <FlexDiv dir='column' key={pt} gap='20px'>
+                  <StyledH5 key={pt} margin='40px 5px 5px 5px'>
+                    {pt}
+                  </StyledH5>
+                  <FlexDiv background='black' height='0.5px' />
 
-                {projects.map(
-                  (p) =>
-                    p.tag === pt && (
-                      <FlexDiv
-                        dir='column'
-                        align='start'
-                        height='300px'
-                        gap='5px'
-                      >
-                        <StyledA
-                          onMouseOver={() => setImage(p.image)}
-                          key={p.id}
-                          href={"projects/" + p.id}
-                          margin='20px 5px 0px 5px'
-                        >
-                          {p.name}
-                        </StyledA>
-                        <StyledP margin='0 0 0 5px'>{p.description}</StyledP>
-                        <FlexDiv justify='start' width='100%' wrap='wrap'>
-                          {p.tech.map((tech: string, i: number) => (
-                            <FlexDiv
-                              height='min-content'
-                              width='max-content'
-                              margin='5px'
-                              key={i}
-                            >
-                              <FlexDiv border='1px solid black' borderRad='3px'>
-                                <StyledP fontSize='12px'>{tech}</StyledP>
+                  {projects.map(
+                    (p) =>
+                      p.tag === pt && (
+                        <FlexDiv dir='column' align='start' gap='20px'>
+                          <StyledA
+                            onMouseOver={() => setImage(p.image)}
+                            key={p.id}
+                            href={"projects/" + p.id}
+                            margin='20px 5px 0px 5px'
+                          >
+                            {p.name}
+                          </StyledA>
+                          <StyledP margin='0 0 0 5px'>{p.description}</StyledP>
+                          <FlexDiv justify='start' width='100%' wrap='wrap'>
+                            {p.tech.map((tech: string, i: number) => (
+                              <FlexDiv
+                                height='min-content'
+                                width='max-content'
+                                margin='5px'
+                                key={i}
+                              >
+                                <FlexDiv
+                                  border='1px solid black'
+                                  borderRad='3px'
+                                >
+                                  <StyledP fontSize='12px'>{tech}</StyledP>
+                                </FlexDiv>
                               </FlexDiv>
-                            </FlexDiv>
-                          ))}
+                            ))}
+                          </FlexDiv>
                         </FlexDiv>
-                      </FlexDiv>
-                    )
-                )}
-              </FlexDiv>
-            ))}
+                      )
+                  )}
+                </FlexDiv>
+              ))}
+            </FlexDiv>
           </FlexDiv>
         </FlexDiv>
       </FlexDiv>

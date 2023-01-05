@@ -3,62 +3,58 @@ import { colors } from "../components/style/Mixins";
 import { StyledH1, StyledP } from "../components/style/StyledTextElements";
 import { FlexDiv } from "../components/style/Wrappers";
 import { motion } from "framer-motion";
+import logo from "../assets/favicon.png";
 import { NoiseDiv } from "../components/NoiseDiv";
+import { CookiesModal } from "../components/partials/Modal";
+import { StyledImage } from "../components/style/StyledImage";
 
+//TODO animera texten
 export const Home = () => {
+  const animations = {
+    initial: { opacity: 0, y: "100vh" },
+    animate: { opacity: 1, y: "0%" },
+    exit: { opacity: 0, y: "-100vh" },
+  };
+
   return (
     <>
       <GlobalStyle />
       <FlexDiv
-        position='relative'
         background={colors.green}
-        minHeight='100vh'
+        minHeight='70vh'
         align='start'
+        padding='100px 0 0 0'
       >
+        <CookiesModal />
         <NoiseDiv className='noise' />
         <FlexDiv
-          dir='column'
           width='90%'
-          align='left'
+          tabletWidth='70%'
+          laptopWidth='60%'
+          dir='column'
+          tabletDir='row'
+          gap='50px'
+          align='start'
           z='100'
           margin='20px 0 0 0'
         >
-          <StyledH1>Hi there. I’m Julia-Lotta, nice to meet you.</StyledH1>
-
-          <StyledP
-            fontSize='35px'
-            textAlign='left'
-            lineheight='35px'
-            style={{ display: "inline" }}
-          >
-            I'm an aspiring
-            <StyledP
-              as={motion.p}
-              drag
-              style={{ display: "inline" }}
-              fontSize='35px'
-              lineheight='35px'
-              hover='pointer'
+          <StyledImage width='200px' src={logo}></StyledImage>
+          <FlexDiv dir='column'>
+            <StyledH1
+              fontSize='52px'
+              as={motion.h1}
+              variants={animations}
+              initial='initial'
+              animate='animate'
+              exit='exit'
+              transition={{ duration: 2 }}
             >
-              <strong>Front End Developer</strong>{" "}
+              Hi there, nice to meet you.
+            </StyledH1>
+            <StyledP fontSize='45px' as={motion.p}>
+              I’m Julia-Lotta, a front end developer based in Stockholm.
             </StyledP>
-            currently studying at Medieinstitutet in Stockholm. I have
-            background in music and prior to my studies I worked as a project
-            &#38; marketing manager. I love to
-            <StyledP
-              as={motion.p}
-              drag
-              style={{ display: "inline" }}
-              fontSize='35px'
-              lineheight='35px'
-              hover='pointer'
-            >
-              <strong>create stuff</strong>
-            </StyledP>
-            and see them grow. Along with my studies I've already built some
-            stuff that I'm kind of proud of. Please have a look around and check
-            out my projects.
-          </StyledP>
+          </FlexDiv>
         </FlexDiv>
       </FlexDiv>
     </>

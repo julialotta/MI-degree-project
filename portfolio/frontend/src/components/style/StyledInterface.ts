@@ -8,7 +8,20 @@ export interface IStylingProps {
   background?: string;
   color?: string;
   height?: string;
+  tabletHeight?: string;
+  tabletDir?: string;
+  tabletWrap?: string;
+  laptopWrap?: string;
+  tabletJustify?: string;
+  tabletAlign?: string;
+  laptopHeight?: string;
+  laptopWidth?: string;
+  laptopAlign?: string;
+  laptopJustify?: string;
+  laptopDir?: string;
+
   width?: string;
+  tabletWidth?: string;
   margin?: string;
   padding?: string;
   fontSize?: string;

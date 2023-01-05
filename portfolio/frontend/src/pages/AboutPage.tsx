@@ -19,6 +19,7 @@ import { RxDot } from "react-icons/rx";
 import { colors } from "../components/style/Mixins";
 import { StyledImage } from "../components/style/StyledImage";
 import { tech } from "../data/projects";
+import { ScrollBar } from "../components/scrollBar";
 
 export const AboutPage = () => {
   return (
@@ -27,6 +28,7 @@ export const AboutPage = () => {
       <FlexDiv background={colors.orange} minHeight='100vh' padding='10px'>
         <NoiseDiv className='noise' />
         <FlexDiv dir='column' margin='10px 0 0 0'>
+          <ScrollBar />
           <StyledH2>About</StyledH2>
           <FlexDiv
             margin='40px 0'
