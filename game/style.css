@@ -1,0 +1,25 @@
+/*
+  yellow: "#feea87",
+  black: "#000000",
+  orange: "#E37C02",
+  pink: "#E37C02",
+  white: "#ffffff",
+  red: "#E42416",
+  green: #d1f2dc;
+ */
+
+.header {
+  background-color: #d1f2dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 0;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: white;
+}
