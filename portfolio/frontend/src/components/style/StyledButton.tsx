@@ -16,7 +16,7 @@ export const StyledButton = styled.button`
   border: ${(props: IStylingProps) => props.border || "none"};
   border-radius: ${(props: IStylingProps) => props.borderRad || "11pt"};
   box-shadow: ${(props: IStylingProps) => props.shadow || 0};
-  color: ${(props: IStylingProps) => props.hovercolor || colors.red};
+  color: ${(props: IStylingProps) => props.color || colors.red};
   text-decoration: none;
   @media (hover: hover) {
     :hover {

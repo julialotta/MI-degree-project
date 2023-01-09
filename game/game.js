@@ -1,4 +1,7 @@
-// LEVEL 3: https://kaboomjs.com/play?demo=runner
+// LEVEL 2: https://kaboomjs.com/play?demo=runner
+// LEVEL 3: https://kaboomjs.com/play?demo=shooter
+
+// om tid finns, "animera" playern från sidan/bakifrån https://kaboomjs.com/play?demo=spriteMerged
 
 kaboom({
   global: true,
@@ -12,25 +15,28 @@ kaboom({
 loadRoot("https://i.imgur.com/");
 loadFont("press", "nkLV4Pb.png", 30, 30);
 loadSprite("player", "lMmlXVs.png");
-loadSprite("cup", "fRznfCo.png ");
-loadSprite("choco", "mvIxX5N.png ");
+loadSprite("cup", "fRznfCo.png");
+loadSprite("choco", "kNWJMvz.png");
 loadSprite("bug", "RgKbtYC.png ");
 loadSprite("brick", "jLKUZ1N.png ");
-loadSprite("surprise", "sH6HHZN.png ");
+loadSprite("surprise", "2lWTZBX.png");
+loadSprite("unboxed", "nrLPTyZ.png");
 loadSprite("background", "ePsjzsd.png");
 loadSprite("lostbackground", "U1udZou.png");
+loadSprite("ground", "ZxgmvvB.png");
+loadSprite("tube", "Er86a2B.png");
 
 const levels = [
   [
-    "                     ",
-    "                     ",
-    "                     ",
-    "                     ",
-    "                     ",
-    "    $                ",
-    "                     ",
-    "                     ",
-    "=====================",
+    "                       ",
+    "                       ",
+    "                       ",
+    "         <<<           ",
+    "    $   =====          ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "======================|",
   ],
   [
     "                     ",
@@ -57,16 +63,15 @@ const levels = [
 ];
 
 //const FLOOR_HEIGHT = 48;
-const JUMP_FORCE = 1100;
-const MOVE_SPEED = 480;
+const JUMP_FORCE = 900;
+const MOVE_SPEED = 400;
 let score = 0;
 
-const sprites = ["player", "cup", "choco", "surprise", "lightening"];
+const sprites = ["player", "choco", "cup"];
 // STARTING SCREEN
 scene("start", () => {
   layers(["bg", "game", "ui"], "game");
-  add([sprite("background"), pos(0, 0), scale(1), "bg"]);
-
+  add([sprite("background"), pos(0, 0), scale(1.1), "bg"]);
   add([text("Tjena", { font: "press" }), pos(24, 24), color(254, 136, 213)]);
 
   onMouseMove(() =>
@@ -83,20 +88,18 @@ scene("start", () => {
   );
 
   onKeyPress("space", () => {
-    go("game");
-    score = 0;
+    go("game", { levelIdx: 0, score: 0 });
   });
+
   onClick(() => {
-    go("game");
-    score = 0;
+    go("game", { levelIdx: 0, score: 0 });
   });
 });
 
 // LEVEL 1
-scene("game", () => {
+scene("game", ({ levelIdx, score }) => {
   layers(["bg", "game", "ui"], "game");
   add([sprite("background"), pos(0, 0), scale(1), "bg"]);
-  let levelIdx = 0;
 
   const player = add([
     sprite("player"),
@@ -111,6 +114,12 @@ scene("game", () => {
       player.jump(JUMP_FORCE);
     }
   });
+
+  onKeyPress("up", () => {
+    if (player.isGrounded()) {
+      player.jump(JUMP_FORCE);
+    }
+  });
   onKeyDown("left", () => {
     player.move(-MOVE_SPEED, 0);
   });
@@ -120,35 +129,70 @@ scene("game", () => {
   });
 
   const level = addLevel(levels[levelIdx], {
-    width: 55,
-    height: 59,
-    pos: vec2(60, 60),
+    width: 50,
+    height: 50,
+    pos: vec2(100, 200),
 
-    "=": () => [sprite("brick"), area(), solid(), scale(0.2), "ui"],
-    $: () => [
-      sprite("surprise"),
+    "=": () => [sprite("ground"), area(), solid(), scale(0.2), "ui"],
+    "|": () => [
+      sprite("tube"),
       area(),
-      pos(0, -9),
-      scale(0.2),
+      pos(-25, -35),
       solid(),
-      "surprise",
+      scale(0.3),
+      "tube",
     ],
-    "#": () => [sprite("cup"), area(), scale(0.1), body(), "cup"],
+    $: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprise"],
+    "!": () => [sprite("unboxed"), area(), scale(0.2), solid(), "unboxed"],
+    "#": () => [sprite("bug"), area(), scale(0.1), body(), "bug"],
+    "<": () => [sprite("choco"), area(), scale(0.15), body(), "choco"],
     "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
   });
-  add([
-    text(score.toString(), { font: "press" }),
+  const scoreLabel = add([
+    text(score, { font: "press" }),
     pos(24, 24),
     color(254, 136, 213),
+    { value: score },
   ]);
   let hasApple = false;
 
   player.onHeadbutt((obj) => {
     if (obj.is("surprise") && !hasApple) {
-      console.log("happening");
       const apple = level.spawn("#", obj.gridPos.sub(0, 1));
+      level.spawn("!", obj.gridPos.sub(0, 0));
       apple.jump(200);
       hasApple = true;
+    }
+  });
+
+  action("bug", (m) => {
+    m.move(30, 0, 20);
+  });
+
+  // Eat the coin!
+  player.onCollide("choco", (choco) => {
+    destroy(choco);
+    scoreLabel.value++;
+    scoreLabel.text = scoreLabel.value;
+  });
+
+  player.onCollide("bug", (bug) => {
+    destroy(bug);
+    go("lose");
+  });
+
+  player.onCollide("tube", () => {
+    keyPress("down", () => {
+      go("game", {
+        levelIdx: levelIdx + 1,
+        score: scoreLabel.value,
+      });
+    });
+  });
+  // Fall death
+  player.onUpdate(() => {
+    if (player.pos.y >= 780) {
+      go("lose");
     }
   });
 });
@@ -159,7 +203,7 @@ scene("lose", () => {
   const textbox = add([
     rect(width() - 180, 250, { radius: 32 }),
     origin("center"),
-    pos(center().x, height().y),
+    pos(center().x, center().y),
     outline(4),
     color(210, 242, 221),
   ]);
@@ -173,11 +217,9 @@ scene("lose", () => {
 
   onKeyPress("space", () => {
     go("start");
-    score = 0;
   });
   onClick(() => {
     go("start");
-    score = 0;
   });
 });
 

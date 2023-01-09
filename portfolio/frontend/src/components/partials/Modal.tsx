@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "react-modal";
+import { saveUser } from "../../utils/services";
 import { colors } from "../style/Mixins";
 import { StyledButton } from "../style/StyledButton";
 import { StyledP, StyledNavLink } from "../style/StyledTextElements";
@@ -18,23 +19,28 @@ export const modalStylesCookies = {
   },
 };
 
+Modal.setAppElement("#root");
+
 export const CookiesModal = () => {
   const [modalIsOpen, setIsOpen] = useState(true);
 
   function closeModal() {
+    saveUser({ user: true });
     setIsOpen(false);
   }
 
   return (
     <Modal isOpen={modalIsOpen} contentLabel='Kakor' style={modalStylesCookies}>
       <FlexDiv dir='column' height={"30vh"} justify={"center"} width={"100%"}>
-        <StyledButton onClick={closeModal}>Stäng</StyledButton>
+        <StyledButton color='black' hovercolor='black' onClick={closeModal}>
+          Stäng
+        </StyledButton>
         <StyledP color={colors.black}>
-          Vi använder cookies för att tillhandahålla våra tjänster samt för
-          mätnings- och analyssyften. Genom att använda vår webbplats och våra
+          Tingloef använder cookies för att tillhandahålla tjänster samt för
+          mätnings- och analyssyften. Genom att använda webbplatsen och våra
           tjänster godkänner du användningen av cookies på det sätt som beskrivs
           i vår
-          <StyledNavLink color={colors.black} to={"/cookies"}>
+          <StyledNavLink color={colors.black} to={"/cookies"} fontSize='18px'>
             policy för cookies.
           </StyledNavLink>
         </StyledP>
