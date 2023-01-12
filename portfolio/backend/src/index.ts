@@ -4,8 +4,10 @@ import "dotenv/config";
 import duolingoRoute from "./routes/duolingodays.routes";
 import gameRoute from "./routes/game.routes";
 import portfolioRoute from "./routes/portfolio.routes";
+import cors from "cors";
 
 const app: Application = express();
+app.use(cors({ origin: true }));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello toto");

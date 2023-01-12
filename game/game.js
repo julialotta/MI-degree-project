@@ -18,12 +18,12 @@ loadSprite("player", "lMmlXVs.png");
 loadSprite("cup", "fRznfCo.png");
 loadSprite("choco", "kNWJMvz.png");
 loadSprite("bug", "RgKbtYC.png ");
-loadSprite("brick", "jLKUZ1N.png ");
+loadSprite("brick", "z7vAI7d.png");
 loadSprite("surprise", "2lWTZBX.png");
 loadSprite("unboxed", "nrLPTyZ.png");
 loadSprite("background", "ePsjzsd.png");
 loadSprite("lostbackground", "U1udZou.png");
-loadSprite("ground", "ZxgmvvB.png");
+loadSprite("ground", "z7vAI7d.png");
 loadSprite("tube", "Er86a2B.png");
 
 const levels = [
@@ -32,7 +32,7 @@ const levels = [
     "                       ",
     "                       ",
     "         <<<           ",
-    "    $   =====          ",
+    "  x $   =====          ",
     "                       ",
     "                       ",
     "                       ",
@@ -65,6 +65,10 @@ const levels = [
 //const FLOOR_HEIGHT = 48;
 const JUMP_FORCE = 900;
 const MOVE_SPEED = 400;
+const BIG_JUMP_FORCE = 550;
+let CURRENT_JUMP_FORCE = JUMP_FORCE;
+const FALL_DEATH = 900;
+const ENEMY_SPEED = 20;
 let score = 0;
 
 const sprites = ["player", "choco", "cup"];
@@ -88,10 +92,12 @@ scene("start", () => {
   );
 
   onKeyPress("space", () => {
+    fullscreen(isFullscreen());
     go("game", { levelIdx: 0, score: 0 });
   });
 
   onClick(() => {
+    fullscreen(isFullscreen());
     go("game", { levelIdx: 0, score: 0 });
   });
 });
@@ -99,16 +105,31 @@ scene("start", () => {
 // LEVEL 1
 scene("game", ({ levelIdx, score }) => {
   layers(["bg", "game", "ui"], "game");
+
   add([sprite("background"), pos(0, 0), scale(1), "bg"]);
 
-  const player = add([
-    sprite("player"),
-    pos(80, 40),
-    scale(0.11),
-    area(),
-    body(),
-  ]);
+  const level = addLevel(levels[levelIdx], {
+    width: 50,
+    height: 50,
+    pos: vec2(100, 200),
 
+    "=": () => [sprite("ground"), area(), solid(), scale(0.2), "ui"],
+    "|": () => [
+      sprite("tube"),
+      area(),
+      pos(-25, -35),
+      solid(),
+      scale(0.3),
+      "tube",
+    ],
+    $: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprisebug"],
+    x: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprisecup"],
+    "!": () => [sprite("unboxed"), area(), scale(0.2), solid(), "unboxed"],
+    "#": () => [sprite("bug"), area(), scale(0.1), body(), "bug"],
+    "<": () => [sprite("choco"), area(), scale(0.15), body(), "choco"],
+    c: () => [sprite("cup"), area(), scale(0.1), body(), "cup"],
+    "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
+  });
   onKeyPress("space", () => {
     if (player.isGrounded()) {
       player.jump(JUMP_FORCE);
@@ -128,44 +149,43 @@ scene("game", ({ levelIdx, score }) => {
     player.move(MOVE_SPEED, 0);
   });
 
-  const level = addLevel(levels[levelIdx], {
-    width: 50,
-    height: 50,
-    pos: vec2(100, 200),
+  const player = add([
+    sprite("player"),
+    pos(80, 40),
+    scale(0.11),
+    area(),
+    body(),
+    big(),
+  ]);
 
-    "=": () => [sprite("ground"), area(), solid(), scale(0.2), "ui"],
-    "|": () => [
-      sprite("tube"),
-      area(),
-      pos(-25, -35),
-      solid(),
-      scale(0.3),
-      "tube",
-    ],
-    $: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprise"],
-    "!": () => [sprite("unboxed"), area(), scale(0.2), solid(), "unboxed"],
-    "#": () => [sprite("bug"), area(), scale(0.1), body(), "bug"],
-    "<": () => [sprite("choco"), area(), scale(0.15), body(), "choco"],
-    "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
-  });
   const scoreLabel = add([
     text(score, { font: "press" }),
     pos(24, 24),
     color(254, 136, 213),
     { value: score },
   ]);
-  let hasApple = false;
+  let hasCup = false;
+  let hasBug = false;
 
   player.onHeadbutt((obj) => {
-    if (obj.is("surprise") && !hasApple) {
+    if (obj.is("surprisebug") && !hasBug) {
       const apple = level.spawn("#", obj.gridPos.sub(0, 1));
       level.spawn("!", obj.gridPos.sub(0, 0));
       apple.jump(200);
-      hasApple = true;
+      hasBug = true;
     }
   });
 
-  action("bug", (m) => {
+  player.onHeadbutt((obj) => {
+    if (obj.is("surprisecup") && !hasCup) {
+      const apple = level.spawn("c", obj.gridPos.sub(0, 1));
+      level.spawn("!", obj.gridPos.sub(0, 0));
+      apple.jump(200);
+      hasCup = true;
+    }
+  });
+
+  onUpdate("bug", (m) => {
     m.move(30, 0, 20);
   });
 
@@ -178,7 +198,8 @@ scene("game", ({ levelIdx, score }) => {
 
   player.onCollide("bug", (bug) => {
     destroy(bug);
-    go("lose");
+
+    go("lose", { score: scoreLabel.value });
   });
 
   player.onCollide("tube", () => {
@@ -191,14 +212,52 @@ scene("game", ({ levelIdx, score }) => {
   });
   // Fall death
   player.onUpdate(() => {
-    if (player.pos.y >= 780) {
-      go("lose");
+    if (player.pos.y >= FALL_DEATH) {
+      go("lose", { score: scoreLabel.value });
     }
+  });
+  function big() {
+    let timer = 0;
+    let isBig = false;
+    return {
+      update() {
+        if (isBig) {
+          CURRENT_JUMP_FORCE = BIG_JUMP_FORCE;
+          // timer minus delta time since last frame
+          timer -= dt();
+
+          if (timer <= 0) {
+            this.smallify();
+          }
+        }
+      },
+      isBig() {
+        return isBig;
+      },
+      smallify() {
+        this.scale = vec2(1);
+        player.pos = (0, 0);
+        CURRENT_JUMP_FORCE = JUMP_FORCE;
+        timer = 0;
+        isBig = false;
+      },
+      biggify(time) {
+        this.scale = vec2(0.11, 0, 11);
+
+        timer = time;
+        isBig = true;
+      },
+    };
+  }
+
+  player.onCollide("cup", (m) => {
+    destroy(m);
+    player.biggify(6);
   });
 });
 
 //LOOSING SCREEN
-scene("lose", () => {
+scene("lose", ({ score }) => {
   add([sprite("lostbackground"), pos(0, 0), scale(1), fixed(), "bg"]);
   const textbox = add([
     rect(width() - 180, 250, { radius: 32 }),
@@ -208,7 +267,7 @@ scene("lose", () => {
     color(210, 242, 221),
   ]);
   add([
-    text("Score:" + score.toString() + "\n\nGame Over :("),
+    text("Score:" + score + "\n\nGame Over :("),
     { size: 82, width: width() - 300, align: "center", font: "press" },
     pos(textbox.pos),
     color(254, 136, 213),

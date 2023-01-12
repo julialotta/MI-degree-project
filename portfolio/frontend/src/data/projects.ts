@@ -58,16 +58,3 @@ export const projects: IProjects[] = [
     tag: "Other",
   },
 ];
-
-// TODO: gör ett api som visar all tech som finns i projecten
-export const tech: string[] = [
-  "React",
-  "TypeScript",
-  "NodeJS",
-  "Axios",
-  "Express",
-  "Firebase",
-  "Google Analytics",
-  "Styled components",
-  "Framer motion",
-];

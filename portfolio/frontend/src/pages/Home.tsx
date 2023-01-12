@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 //TODO animera texten
 export const Home = () => {
   const [user, setUser] = useState(true);
+
   const animations = {
     initial: { opacity: 0, y: "100vh" },
     animate: { opacity: 1, y: "0%" },
@@ -21,7 +22,6 @@ export const Home = () => {
 
   useEffect(() => {
     let user: [] = getUser();
-    console.log(user);
 
     if (user.length !== 0) {
       setUser(false);

@@ -1,14 +1,14 @@
 import express, { Router } from "express";
 import {
-  get_portfolioProjectByID,
-  get_portfolioProjects,
+  get_portfolioProjectsController,
+  get_portfolioProjectByIDController,
+  get_allTechController,
 } from "../controllers/portfolio.controller";
 
 const router: Router = express.Router();
 
-router.get("/", get_portfolioProjects);
-router.get("/:id", get_portfolioProjectByID);
-/* router.post("/newscore", post_newBookingsController);
-router.get("/highscore", get_bookingByIdController); */
+router.get("/", get_portfolioProjectsController);
+router.get("/id/:id", get_portfolioProjectByIDController);
+router.get("/tech", get_allTechController);
 
 export default router;

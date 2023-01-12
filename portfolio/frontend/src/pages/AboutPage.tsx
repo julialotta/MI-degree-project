@@ -18,10 +18,22 @@ import { TbCircleDot } from "react-icons/tb";
 import { RxDot } from "react-icons/rx";
 import { colors } from "../components/style/Mixins";
 import { StyledImage } from "../components/style/StyledImage";
-import { tech } from "../data/projects";
 import { ScrollBar } from "../components/scrollBar";
+import { useEffect, useState } from "react";
+import { fetchTech } from "../utils/services/handleBookingsFetch.service";
 
 export const AboutPage = () => {
+  const [tech, setTech] = useState<String[]>(["hej"]);
+  useEffect(() => {
+    async function getTEch() {
+      const fetchedTech = await fetchTech();
+      console.log(fetchedTech);
+
+      setTech(fetchedTech);
+    }
+    getTEch();
+  }, []);
+
   return (
     <>
       <GlobalStyle />
@@ -160,7 +172,7 @@ export const AboutPage = () => {
             </FlexDiv>
             <StyledH5 fontSize='24px'>Skills</StyledH5>
             <FlexDiv justify='start' width='100%' wrap='wrap'>
-              {tech.map((tech: string, i: number) => (
+              {tech.map((tech: String, i: number) => (
                 <FlexDiv width='max-content' margin='5px' key={i}>
                   <FlexDiv border='1px solid black' borderRad='3px'>
                     <StyledP fontSize='12px'>{tech}</StyledP>
