@@ -8,6 +8,7 @@ import { ProjectsPage } from "./pages/ProjectsPage";
 import { Home } from "./pages/Home";
 import { SingleProjectPage } from "./pages/SingleProject";
 import { AnimatePresence } from "framer-motion";
+import { AdminPage } from "./pages/Admin";
 function App() {
   const location = useLocation();
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='about' element={<AboutPage />} />
           <Route path='projects' element={<ProjectsPage />} />
           <Route path='projects/:id' element={<SingleProjectPage />} />
+          <Route path='admin' element={<AdminPage />}></Route>
           <Route path='cookies' element={<CookiesPage />}></Route>
           <Route path='*' element={<NotFound />}></Route>
         </Route>
