@@ -1,49 +1,8 @@
-// https://kaboomjs.com/play?demo=platformer
+import levels from "../components/levels.js";
+import patrol from "../functions/patrol.js";
+import big from "../functions/big.js";
 
-// om tid finns, "animera" playern från sidan/bakifrån https://kaboomjs.com/play?demo=spriteMerged
-import levels from "./components/levels.js";
-import patrol from "./functions/patrol.js";
-import big from "./functions/big.js";
-import start from "./scenes/start.js";
-
-kaboom({
-  global: true,
-  //fullscreen: true,
-  scale: 1,
-  debug: true,
-  background: [210, 242, 221],
-});
-
-//IMAGES
-loadSound("ohno", "assets/sounds/ohno.mp3");
-loadSound("land", "assets/sounds/land.mp3");
-loadSound("jump", "assets/sounds/jump.mp3");
-loadSound("points", "assets/sounds/points.mp3");
-loadSound("bigjump", "assets/sounds/bigjump.mp3");
-loadSound("jingle", "assets/sounds/jingle.mp3");
-loadSound("fall", "assets/sounds/fall.mp3");
-loadSound("box", "assets/sounds/box.mp3");
-loadSound("power", "assets/sounds/power.mp3");
-loadSound("powerdown", "assets/sounds/powerdown.mp3");
-loadFont("press", "assets/images/press.png", 30, 30);
-loadSprite("background", "assets/images/bg.png");
-loadSprite("player", "assets/images/player.png");
-loadSprite("choco", "assets/images/choco.png");
-loadSprite("cup", "assets/images/cup.png");
-loadSprite("bug", "assets/images/bug.png");
-loadSprite("surprise", "assets/images/surprise.png");
-loadSprite("unboxed", "assets/images/unboxed.png");
-loadSprite("lostbackground", "assets/images/lostbg.png");
-loadSprite("ground", "assets/images/ground.png");
-loadSprite("tube", "assets/images/tube.png");
-
-//const FLOOR_HEIGHT = 48;
-
-// STARTING SCREEN
-scene("start", start);
-
-// LEVEL 1
-scene("game", ({ levelIdx, score }) => {
+export default function game({ levelIdx, score }) {
   let CURRENT_JUMP_FORCE = 800;
   const MOVE_SPEED = 400;
   const FALL_DEATH = 2000;
@@ -188,34 +147,4 @@ scene("game", ({ levelIdx, score }) => {
     player.biggify(6);
     CURRENT_JUMP_FORCE = 1000;
   });
-});
-
-//LOOSING SCREEN
-scene("lose", ({ score }) => {
-  add([sprite("lostbackground"), pos(0, 0), scale(1), fixed(), "bg"]);
-  play("ohno");
-  const textbox = add([
-    rect(width() - 180, 250, { radius: 32 }),
-    origin("center"),
-    pos(center().x, center().y),
-    outline(4),
-    color(210, 242, 221),
-  ]);
-
-  add([
-    text("Score:" + score + "\n\nGame Over :("),
-    { size: 82, width: width() - 300, align: "center", font: "press" },
-    pos(textbox.pos),
-    color(254, 136, 213),
-    origin("center"),
-  ]);
-
-  onKeyPress("space", () => {
-    go("start");
-  });
-  onClick(() => {
-    go("start");
-  });
-});
-
-go("start");
+}
