@@ -12,7 +12,7 @@ const HighscoreSchema = new mongoose.Schema<IHighscore>({
   },
 });
 
-export const ProjectModel = mongoose.model<IHighscore>(
+export const HighscoreModel = mongoose.model<IHighscore>(
   "Highscore",
   HighscoreSchema
 );

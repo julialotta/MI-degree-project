@@ -8,7 +8,7 @@
 - MongoDB
 - Framer Motion
 - Axios
-- Styled Components
+- Styled Components </br>
   etc...
 
 ## Contributors

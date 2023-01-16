@@ -2,6 +2,8 @@
 
 // om tid finns, "animera" playern från sidan/bakifrån https://kaboomjs.com/play?demo=spriteMerged
 
+// bra struktur: https://www.youtube.com/watch?v=iRXI6ThRJvM
+
 import start from "./scenes/start.js";
 import game from "./scenes/game.js";
 import lose from "./scenes/lose.js";

@@ -1,83 +1,61 @@
-import { GlobalStyle } from "../components/style/fonts";
-import { colors } from "../components/style/Mixins";
-import { StyledH1, StyledP } from "../components/style/StyledTextElements";
+import { useForm } from "react-hook-form";
+import { ImageUpLoader } from "../components/ImageUploader";
 import { FlexDiv } from "../components/style/Wrappers";
-import { motion } from "framer-motion";
-import logo from "../assets/favicon.png";
-import { NoiseDiv } from "../components/NoiseDiv";
-import { CookiesModal } from "../components/partials/Modal";
-import { StyledImage } from "../components/style/StyledImage";
-import { getUser } from "../utils/services";
-import { useEffect, useState } from "react";
 
-//! göra en adminsida där man kan lägga till projekt
-// npm install --save multer
 export const AdminPage = () => {
-  const [user, setUser] = useState(true);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data: any) => console.log(data);
 
-  const animations = {
-    initial: { opacity: 0, y: "100vh" },
-    animate: { opacity: 1, y: "0%" },
-    exit: { opacity: 0 },
-  };
-
-  useEffect(() => {
-    let user: [] = getUser();
-
-    if (user.length !== 0) {
-      setUser(false);
-    }
-  }, []);
+  console.log(watch("example")); // watch input value by passing the name of it
 
   return (
+    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <>
-      <GlobalStyle />
-      <FlexDiv
-        background={colors.green}
-        minHeight='70vh'
-        align='start'
-        padding='100px 0 0 0'
-      >
-        {user && <CookiesModal />}
-        <NoiseDiv className='noise' />
-        <FlexDiv
-          width='90%'
-          tabletWidth='70%'
-          laptopWidth='60%'
-          dir='column'
-          tabletDir='row'
-          gap='50px'
-          align='start'
-          z='100'
-          margin='20px 0 0 0'
-        >
-          <StyledImage width='200px' src={logo}></StyledImage>
-          <FlexDiv dir='column'>
-            <StyledH1
-              fontSize='52px'
-              as={motion.h1}
-              variants={animations}
-              initial='initial'
-              animate='animate'
-              exit='exit'
-              transition={{ duration: 0.6 }}
-            >
-              Hi there, nice to meet you.
-            </StyledH1>
-            <StyledP
-              fontSize='45px'
-              as={motion.p}
-              variants={animations}
-              initial='initial'
-              animate='animate'
-              exit='exit'
-              transition={{ duration: 0.6 }}
-            >
-              I’m Julia-Lotta, a front end developer based in Stockholm.
-            </StyledP>
-          </FlexDiv>
+      <ImageUpLoader />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FlexDiv dir='column' gap='30px'>
+          <label>
+            Namn
+            <FlexDiv>
+              <input {...register("name", { required: true })} />
+            </FlexDiv>
+          </label>
+          <label>
+            Beskrivning
+            <FlexDiv>
+              <input {...register("description", { required: true })} />
+            </FlexDiv>
+          </label>
+          <label>
+            Tech
+            <FlexDiv>
+              <input {...register("tech", { required: true })} />
+            </FlexDiv>
+          </label>
+
+          <label>
+            Länk
+            <FlexDiv>
+              <input {...register("image", { required: true })} />
+            </FlexDiv>
+          </label>
+          <label>
+            Tag
+            <FlexDiv>
+              <input {...register("image", { required: true })} />
+            </FlexDiv>
+          </label>
+          {/* errors will return when field validation fails  */}
+          {errors.exampleRequired && <span>This field is required</span>}
+
+          <input type='submit' />
         </FlexDiv>
-      </FlexDiv>
+      </form>
     </>
   );
 };
