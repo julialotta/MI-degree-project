@@ -1,3 +1,4 @@
+import { IHighscore } from "../../models/IHighscore";
 import { IProjects } from "../../models/IProjects";
 import { get } from "./handleAxiosRequests.service";
 
@@ -14,4 +15,9 @@ export async function fetchTech(): Promise<String[]> {
 export async function fetchProjectByID(id: string): Promise<IProjects> {
   const url: string = `${process.env.REACT_APP_BOOKINGS_URI}/` + id;
   return (await get<IProjects>(url)).data;
+}
+
+export async function fetchHighscore(): Promise<IHighscore[]> {
+  const url: string = `${process.env.REACT_APP_HIGHSCORE_URI}`;
+  return (await get<IHighscore[]>(url)).data;
 }

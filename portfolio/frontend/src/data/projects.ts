@@ -4,7 +4,7 @@ import { IProjects } from "../models/IProjects";
 // 3 other
 export const projects: IProjects[] = [
   {
-    id: 0,
+    _id: "0",
     name: "Whodunit Geogames",
     description: "An app built in React Native",
     tech: ["React Native", "Firebase", "Google Maps API"],
@@ -13,7 +13,7 @@ export const projects: IProjects[] = [
     tag: "Work",
   },
   {
-    id: 1,
+    _id: "1",
     name: "Allt för klubben",
     description:
       "On behalf of advertising agency Passion Lab I have created a quiz application for Obos Damallsvenskan, where football fans can compete against each other, for their favorite team.",
@@ -35,7 +35,7 @@ export const projects: IProjects[] = [
     tag: "Work",
   },
   {
-    id: 2,
+    _id: "2",
     name: "Jullan Debugger",
     description:
       "For my degree project I created the game Jullan Debugger. Jullan has to fight bugs and thrives when she gets coffee and chocolate. This game is created with Kaboom JS. ",
@@ -47,7 +47,7 @@ export const projects: IProjects[] = [
   },
 
   {
-    id: 3,
+    _id: "3",
     name: "BRF Kakburken",
     description:
       "As a board member om my BRF I created a website for all the residents where the board easily can share new and important information",

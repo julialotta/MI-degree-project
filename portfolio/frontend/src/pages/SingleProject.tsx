@@ -22,7 +22,7 @@ export const SingleProjectPage = () => {
   //ADDING DIFFERENT CATEGORIES(tags) OF PROJECTS
   useEffect(() => {
     for (let i = 0; i < projects.length; i++) {
-      if (projects[i].id.toString() === id.id) {
+      if (projects[i]._id === id.id) {
         setProject(projects[i]);
       }
     }

@@ -75,8 +75,8 @@ export const ProjectsPage = () => {
                         <FlexDiv dir='column' align='start' gap='15px'>
                           <StyledA
                             onMouseOver={() => setImage(p.image)}
-                            key={p.id}
-                            href={"projects/" + p.id}
+                            key={p._id}
+                            href={"projects/" + p._id}
                             margin='20px 5px 0px 5px'
                           >
                             {p.name}

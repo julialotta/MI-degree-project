@@ -9,11 +9,12 @@ import { Home } from "./pages/Home";
 import { SingleProjectPage } from "./pages/SingleProject";
 import { AnimatePresence } from "framer-motion";
 import { AdminPage } from "./pages/Admin";
+import { HighscorePage } from "./pages/Highscore";
 function App() {
   const location = useLocation();
 
   return (
-    <AnimatePresence initial={false} exitBeforeEnter>
+    <AnimatePresence initial={false} mode='wait'>
       <Routes key={location.pathname} location={location.pathname}>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
@@ -21,6 +22,7 @@ function App() {
           <Route path='projects' element={<ProjectsPage />} />
           <Route path='projects/:id' element={<SingleProjectPage />} />
           <Route path='admin' element={<AdminPage />}></Route>
+          <Route path='highscore' element={<HighscorePage />}></Route>
           <Route path='cookies' element={<CookiesPage />}></Route>
           <Route path='*' element={<NotFound />}></Route>
         </Route>
