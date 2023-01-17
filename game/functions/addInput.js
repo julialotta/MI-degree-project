@@ -1,4 +1,4 @@
-export default function addButton(txt, p) {
+export default function addInput(txt, p, f) {
   const btn = add([
     rect(width() - width() / 1.5, 60, { radius: 32 }),
     origin("center"),
@@ -26,7 +26,10 @@ export default function addButton(txt, p) {
 
   onCharInput((ch) => {
     if (input.text.length < 12) input.text += ch;
+    onUpdate(f);
   });
+
+  /* input.onUpdate(f); */
 
   onKeyPress("backspace", () => {
     input.text = input.text.substring(0, input.text.length - 1);

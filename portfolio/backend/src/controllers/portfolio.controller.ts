@@ -7,13 +7,13 @@ export const get_portfolioProjectsController = async (
   req: Request,
   res: Response
 ) => {
-  const bookings = await ProjectModel.find();
+  const projects = await ProjectModel.find();
 
   try {
     res.status(200).json({
       status: statusSuccess,
       message: "Portfolioprojekten hämtades",
-      data: bookings,
+      data: projects,
     });
   } catch (error: any) {
     res.status(500).json({

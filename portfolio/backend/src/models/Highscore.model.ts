@@ -6,7 +6,7 @@ const HighscoreSchema = new mongoose.Schema<IHighscore>({
     type: String,
     // required: true,
   },
-  points: {
+  score: {
     type: Number,
     // required: true,
   },

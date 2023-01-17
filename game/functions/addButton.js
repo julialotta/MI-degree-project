@@ -1,4 +1,4 @@
-export default function addButton(txt, p, f) {
+export default function addButton(txt, clicktxt, p, f) {
   const btn = add([
     rect(width() - width() / 3, 60, { radius: 32 }),
     origin("center"),
@@ -8,15 +8,20 @@ export default function addButton(txt, p, f) {
     "textbox",
   ]);
 
-  add([
+  const btnText = add([
     text(txt),
     { size: 82, width: width() - 300, align: "center", font: "press" },
     pos(p),
     origin("center"),
     color(254, 136, 213),
   ]);
-
   btn.onClick(f);
+
+  if (clicktxt.length > 0) {
+    btn.onClick(() => {
+      btnText.text = clicktxt;
+    });
+  }
 
   btn.onUpdate(() => {
     if (btn.isHovering()) {

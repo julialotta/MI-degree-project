@@ -96,7 +96,9 @@ export default function game({ levelIdx, score, name }) {
 
   //level text on screen
   add([
-    text("Level " + parseInt(levelIdx + 1), { font: "press" }),
+    text("Level " + parseInt(levelIdx + 1) + " av " + levels.length, {
+      font: "press",
+    }),
     pos(24, 24),
     color(254, 136, 213),
     { value: levelIdx },

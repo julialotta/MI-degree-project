@@ -1,4 +1,5 @@
 import addButton from "../functions/addButton.js";
+import saveScore from "../functions/saveScore.js";
 
 export default function win({ score, name }) {
   add([sprite("background"), pos(0, 0), scale(1), fixed(), "bg"]);
@@ -16,7 +17,7 @@ export default function win({ score, name }) {
     outline(4),
   ]);
 
-  add([
+  const txt = add([
     text("Woho " + name + "\n\nYOU WON! :)" + "\n\nScore:" + score),
     { size: 82, width: width() - 300, align: "center", font: "press" },
     pos(textbox.pos),
@@ -24,26 +25,24 @@ export default function win({ score, name }) {
     origin("center"),
   ]);
 
-  // button
-  addButton("Spara highscore", vec2(center().x, center().y + 100), () => {
-    music.pause();
-    if (alias.isName().length > 0) {
-      go("game", { levelIdx: 0, score: 0, name: alias.isName() });
-    } else {
-      alert("enter alias");
+  addButton(
+    "Spara highscore",
+    "Sparat",
+    vec2(center().x, center().y + 100),
+    () => {
+      music.pause();
+      saveScore({ name, score });
+      txt.text = "Sparat!";
     }
+  );
+
+  addButton("Spela igen", "", vec2(center().x, center().y + 200), () => {
+    go("start");
+    music.pause();
   });
 
-  onKeyPress("space", () => {
-    go("start");
-    music.pause();
-  });
-  onClick(() => {
-    go("start");
-    music.pause();
-  });
+  //mouse movement fun
   const sprites = ["player", "choco", "cup"];
-
   onMouseMove(() =>
     add([
       pos(mousePos()),

@@ -1,5 +1,6 @@
 import addButton from "../functions/addButton.js";
 import addInput from "../functions/addInput.js";
+import saveScore from "../functions/saveScore.js";
 
 export default function start() {
   layers(["bg", "game", "ui"], "game");
@@ -11,19 +12,32 @@ export default function start() {
   });
   music.play();
 
+  // validation text for alias
+  const ops = add([
+    text("", { font: "press" }),
+    { size: 82, width: width() - 300, align: "center", font: "press" },
+    pos(vec2(center().x, center().y)),
+    origin("center"),
+    color(228, 36, 22),
+  ]);
+
   // button
-  addButton("Starta spelet", vec2(center().x, center().y - 100), () => {
+  addButton("Starta spelet", "", vec2(center().x, center().y - 100), () => {
     music.pause();
     if (alias.isName().length > 0) {
       go("game", { levelIdx: 5, score: 0, name: alias.isName() });
     } else {
-      alert("enter alias");
+      ops.text = "Oops, ange ett alias!";
+    }
+  });
+  // input
+  const alias = addInput("Alias:", vec2(center().x, center().y - 200), () => {
+    if (alias.isName().length > 0) {
+      ops.text = "";
     }
   });
 
-  // input
-  const alias = addInput("Alias:", vec2(center().x, center().y - 200));
-
+  //mouse movement fun
   const sprites = ["player", "choco", "cup"];
   onMouseMove(() =>
     add([

@@ -10,6 +10,8 @@ import { ImageModel } from "./models/Image.model";
 const multer = require("multer");
 const app: Application = express();
 app.use(cors({ origin: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const upload = multer({ dest: "./public/data/uploads/" });
 
