@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { ImageUpLoader } from "../components/ImageUploader";
 import { FlexDiv } from "../components/style/Wrappers";
 
 export const AdminPage = () => {
@@ -16,42 +15,51 @@ export const AdminPage = () => {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <>
-      <ImageUpLoader />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FlexDiv dir='column' gap='30px'>
           <label>
             Namn
             <FlexDiv>
               <input {...register("name", { required: true })} />
+              {errors.name && <span>This field is required</span>}
             </FlexDiv>
           </label>
           <label>
             Beskrivning
             <FlexDiv>
               <input {...register("description", { required: true })} />
+              {errors.description && <span>This field is required</span>}
             </FlexDiv>
           </label>
           <label>
             Tech
             <FlexDiv>
               <input {...register("tech", { required: true })} />
+              {errors.tech && <span>This field is required</span>}
             </FlexDiv>
           </label>
 
           <label>
             Länk
             <FlexDiv>
-              <input {...register("image", { required: true })} />
+              <input {...register("link", { required: true })} />
+              {errors.link && <span>This field is required</span>}
             </FlexDiv>
           </label>
           <label>
-            Tag
+            Tags
             <FlexDiv>
-              <input {...register("image", { required: true })} />
+              <input {...register("tags", { required: true })} />
+              {errors.tags && <span>This field is required</span>}
             </FlexDiv>
           </label>
-          {/* errors will return when field validation fails  */}
-          {errors.exampleRequired && <span>This field is required</span>}
+          <label>
+            Images
+            <FlexDiv>
+              <input type='file' {...register("images", { required: true })} />
+              {errors.tags && <span>This field is required</span>}
+            </FlexDiv>
+          </label>
 
           <input type='submit' />
         </FlexDiv>

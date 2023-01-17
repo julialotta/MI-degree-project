@@ -44,10 +44,10 @@ export const ProjectsPage = () => {
           align='start'
           gap='50px'
         >
-          <FlexDiv margin='20px 0 0 0'>
+          <FlexDiv margin='40px 0 0 0'>
             <StyledImage
               borderRad='2px'
-              width='80%'
+              width='70%'
               hover='pointer'
               src={image}
             ></StyledImage>
@@ -56,22 +56,23 @@ export const ProjectsPage = () => {
             dir='column'
             justify='start'
             align='start'
-            gap='50px'
+            gap='40px'
             overflowY='scroll'
           >
-            <StyledH2 textAlign='left'>Projects {projects.length}</StyledH2>
+            <FlexDiv align='end' gap='5px'>
+              <StyledH2 textAlign='left'>Projects </StyledH2>
+              <StyledP>{projects.length}</StyledP>
+            </FlexDiv>
             <FlexDiv gap='20px' dir='column'>
               {projectTags.map((pt) => (
-                <FlexDiv dir='column' key={pt} gap='20px'>
-                  <StyledH5 key={pt} margin='40px 5px 5px 5px'>
-                    {pt}
-                  </StyledH5>
+                <FlexDiv dir='column' align='start' key={pt}>
+                  <StyledH5 key={pt}>{pt}</StyledH5>
                   <FlexDiv background='black' height='0.5px' />
 
                   {projects.map(
                     (p) =>
                       p.tag === pt && (
-                        <FlexDiv dir='column' align='start' gap='20px'>
+                        <FlexDiv dir='column' align='start' gap='15px'>
                           <StyledA
                             onMouseOver={() => setImage(p.image)}
                             key={p.id}

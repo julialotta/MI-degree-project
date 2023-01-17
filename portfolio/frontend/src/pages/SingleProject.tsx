@@ -2,7 +2,12 @@ import { NoiseDiv } from "../components/NoiseDiv";
 import { GlobalStyle } from "../components/style/fonts";
 import { colors } from "../components/style/Mixins";
 import { StyledImage } from "../components/style/StyledImage";
-import { StyledH3, StyledP } from "../components/style/StyledTextElements";
+import {
+  StyledA,
+  StyledH3,
+  StyledNavLink,
+  StyledP,
+} from "../components/style/StyledTextElements";
 import { FlexDiv } from "../components/style/Wrappers";
 import { projects } from "../data/projects";
 import React, { useEffect, useState } from "react";
@@ -34,20 +39,31 @@ export const SingleProjectPage = () => {
       >
         <NoiseDiv className='noise' />
         <FlexDiv
+          dir='column'
+          tabletDir='row'
           margin='30px 50px'
           height='100%'
           z='1'
           align='start'
           gap='20px'
         >
+          <StyledNavLink to='/projects'>Tillbaka</StyledNavLink>
           <FlexDiv>
             <StyledImage
               borderRad='7px'
+              width='80%'
+              tabletWidth='70%'
               hover='pointer'
               src={project?.image}
             ></StyledImage>
           </FlexDiv>
-          <FlexDiv dir='column' justify='start' align='start' gap='30px'>
+          <FlexDiv
+            dir='column'
+            justify='start'
+            align='start'
+            gap='30px'
+            margin='0 30px 0 0'
+          >
             <>
               <StyledH3 textAlign='left'>{project?.name}</StyledH3>
               <FlexDiv background='black' height='0.5px' />
@@ -61,6 +77,14 @@ export const SingleProjectPage = () => {
                     </FlexDiv>
                   </FlexDiv>
                 ))}
+              </FlexDiv>
+              <FlexDiv align='start' dir='column'>
+                <StyledA fontSize='20px' href={project?.github}>
+                  Github
+                </StyledA>
+                <StyledA fontSize='20px' href={project?.link}>
+                  WWW
+                </StyledA>
               </FlexDiv>
             </>
           </FlexDiv>

@@ -2,21 +2,23 @@ import levels from "../components/levels.js";
 import patrol from "../functions/patrol.js";
 import big from "../functions/big.js";
 
-export default function game({ levelIdx, score }) {
-  let CURRENT_JUMP_FORCE = 800;
+export default function game({ levelIdx, score, name }) {
+  add([sprite("background"), pos(0, 0), scale(1), fixed(), "bg"]);
+
+  //reusable variables
+  const JUMP_FORCE = 800;
+  const BIG_JUMP_FORCE = 1000;
   const MOVE_SPEED = 400;
   const FALL_DEATH = 2000;
 
-  layers(["bg", "game", "ui"], "game");
-  add([sprite("background"), pos(0, 0), scale(1), fixed(), "bg"]);
-  play("land");
   const level = addLevel(levels[levelIdx], {
     width: 50,
     height: 50,
     pos: vec2(100, 200),
 
+    //define sprites
     "=": () => [sprite("ground"), area(), solid(), scale(0.2), "ui"],
-    "^": () => [sprite("ground"), area(), solid(), scale(0.2), "ui"],
+    "^": () => [sprite("thorn"), area(), solid(), body(), scale(0.19), "thorn"],
     "|": () => [
       sprite("tube"),
       area(),
@@ -27,25 +29,45 @@ export default function game({ levelIdx, score }) {
     ],
     $: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprisebug"],
     x: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprisecup"],
+    y: () => [sprite("surprise"), area(), scale(0.2), solid(), "surprisechoco"],
     "!": () => [sprite("unboxed"), area(), scale(0.2), solid(), "unboxed"],
     "#": () => [sprite("bug"), area(), scale(0.1), body(), patrol(), "bug"],
     "<": () => [sprite("choco"), area(), scale(0.15), "choco"],
     c: () => [sprite("cup"), area(), scale(0.1), body(), "cup"],
     "&": () => [sprite("player"), area(), body(), scale(0.3), "ui"],
   });
+
+  //music
+  play("land");
+  const music = play("song", {
+    volume: 0.4,
+    loop: true,
+  });
+  music.play();
+
+  //key functions
   onKeyPress("space", () => {
     if (player.isGrounded()) {
-      player.jump(CURRENT_JUMP_FORCE);
       play("jump");
+      if (player.isBig) {
+        player.jump(BIG_JUMP_FORCE);
+      } else {
+        player.jump(JUMP_FORCE);
+      }
     }
   });
 
   onKeyPress("up", () => {
     if (player.isGrounded()) {
-      player.jump(CURRENT_JUMP_FORCE);
       play("jump");
+      if (player.isBig) {
+        player.jump(BIG_JUMP_FORCE);
+      } else {
+        player.jump(JUMP_FORCE);
+      }
     }
   });
+
   onKeyDown("left", () => {
     player.move(-MOVE_SPEED, 0);
   });
@@ -63,6 +85,7 @@ export default function game({ levelIdx, score }) {
     big(),
   ]);
 
+  // score text on screen
   const scoreLabel = add([
     text(score, { font: "press" }),
     pos(center().x + center().x - 54, 24),
@@ -70,6 +93,8 @@ export default function game({ levelIdx, score }) {
     { value: score },
     fixed(),
   ]);
+
+  //level text on screen
   add([
     text("Level " + parseInt(levelIdx + 1), { font: "press" }),
     pos(24, 24),
@@ -77,27 +102,32 @@ export default function game({ levelIdx, score }) {
     { value: levelIdx },
     fixed(),
   ]);
-  let hasCup = false;
-  let hasBug = false;
 
+  //player touches surpriseboxes with head
   player.onHeadbutt((obj) => {
-    if (obj.is("surprisebug") && !hasBug) {
+    if (obj.is("surprisebug")) {
       play("box");
+      destroy(obj);
       const apple = level.spawn("#", obj.gridPos.sub(0, 1));
       level.spawn("!", obj.gridPos.sub(0, 0));
       apple.jump(200);
-      hasBug = true;
     }
-    if (obj.is("surprisecup") && !hasCup) {
+    if (obj.is("surprisecup")) {
       play("box");
+      destroy(obj);
       const apple = level.spawn("c", obj.gridPos.sub(0, 1));
       level.spawn("!", obj.gridPos.sub(0, 0));
       apple.jump(200);
-      hasCup = true;
+    }
+    if (obj.is("surprisechoco")) {
+      destroy(obj);
+      play("box");
+      level.spawn("<", obj.gridPos.sub(0, 1));
+      level.spawn("!", obj.gridPos.sub(0, 0));
     }
   });
 
-  // Eat the coin!
+  //player gets points from chocolate
   player.onCollide("choco", (choco) => {
     destroy(choco);
     play("points");
@@ -105,46 +135,73 @@ export default function game({ levelIdx, score }) {
     scoreLabel.text = scoreLabel.value;
   });
 
+  //player collides with bug on ground
   player.onCollide("bug", (e, col) => {
-    // if it's not from the top, die
-    if (!col.isBottom()) {
-      go("lose", { score: scoreLabel.value });
+    if (!col.isBottom() && player.isBig()) {
+      player.smallify();
+      play("powerdown");
+      destroy(e);
+      return;
+    }
+    if (!col.isBottom() && !player.isBig()) {
+      music.pause();
+      go("lose", { score: scoreLabel.value, name: name });
     }
   });
 
-  player.onCollide("tube", () => {
-    onKeyPress("down", () => {
-      go("game", {
-        levelIdx: levelIdx + 1,
-        score: scoreLabel.value,
-      });
-    });
-  });
-  // Fall death
-  player.onUpdate(() => {
-    //track player on screen
-    camPos(player.pos);
-    if (player.pos.y >= FALL_DEATH - 700) {
-      play("fall");
-    }
-    if (player.pos.y >= FALL_DEATH) {
-      go("lose", { score: scoreLabel.value });
-    }
-  });
-
+  //player jumps on bug
   player.onGround((l) => {
     if (l.is("bug")) {
       player.jump(1185);
       play("bigjump");
+      play("points");
       destroy(l);
+      scoreLabel.value++;
+      scoreLabel.text = scoreLabel.value;
       addKaboom(player.pos);
     }
   });
 
+  //player collides with thorn
+  player.onCollide("thorn", (thorn) => {
+    destroy(thorn);
+    music.pause();
+    go("lose", { score: scoreLabel.value, name: name });
+  });
+
+  //player slides down tube
+  player.onCollide("tube", () => {
+    onKeyPress("down", () => {
+      if (levelIdx === levels.length - 1) {
+        music.pause();
+
+        go("win", { score: scoreLabel.value, name: name });
+      } else {
+        music.pause();
+        go("game", {
+          levelIdx: levelIdx + 1,
+          score: scoreLabel.value,
+          name: name,
+        });
+      }
+    });
+  });
+
+  player.onUpdate(() => {
+    //track player on screen
+    camPos(player.pos);
+    // if player falls off ground
+    if (player.pos.y >= FALL_DEATH) {
+      music.pause();
+      play("fall");
+      go("lose", { score: scoreLabel.value, name: name });
+    }
+  });
+
+  //player gets big from coffee
   player.onCollide("cup", (m) => {
     play("power");
     destroy(m);
     player.biggify(6);
-    CURRENT_JUMP_FORCE = 1000;
   });
 }

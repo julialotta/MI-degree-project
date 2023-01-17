@@ -7,6 +7,7 @@
 import start from "./scenes/start.js";
 import game from "./scenes/game.js";
 import lose from "./scenes/lose.js";
+import win from "./scenes/win.js";
 
 kaboom({
   global: true,
@@ -25,6 +26,7 @@ loadSound("jingle", "assets/sounds/jingle.mp3");
 loadSound("fall", "assets/sounds/fall.mp3");
 loadSound("box", "assets/sounds/box.mp3");
 loadSound("power", "assets/sounds/power.mp3");
+loadSound("song", "assets/sounds/song.mp3");
 loadSound("powerdown", "assets/sounds/powerdown.mp3");
 
 //FONTS
@@ -41,14 +43,14 @@ loadSprite("unboxed", "assets/images/unboxed.png");
 loadSprite("lostbackground", "assets/images/lostbg.png");
 loadSprite("ground", "assets/images/ground.png");
 loadSprite("tube", "assets/images/tube.png");
+loadSprite("thorn", "assets/images/thorn.png");
 
 //const FLOOR_HEIGHT = 48;
 
 // SCENES
 scene("start", start);
 scene("game", game);
-
-//LOOSING SCREEN
 scene("lose", lose);
+scene("win", win);
 
 go("start");
