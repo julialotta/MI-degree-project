@@ -88,7 +88,7 @@ export default function game({ levelIdx, score, name }) {
   // score text on screen
   const scoreLabel = add([
     text(score, { font: "press" }),
-    pos(center().x + center().x - 54, 24),
+    pos(center().x + center().x - 64, 24),
     color(254, 136, 213),
     { value: score },
     fixed(),

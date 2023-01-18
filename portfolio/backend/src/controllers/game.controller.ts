@@ -39,7 +39,7 @@ export const post_newHighscore = async (req: Request, res: Response) => {
     const addedScore = await postNewHighscore.save();
     res.status(200).json({
       status: statusSuccess,
-      message: "New booking added to DB",
+      message: "New highscore added to DB",
       data: addedScore,
     });
   } catch (error: any) {
