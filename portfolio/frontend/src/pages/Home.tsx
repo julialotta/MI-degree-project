@@ -34,8 +34,8 @@ export const Home = () => {
       <FlexDiv
         background={colors.green}
         minHeight='70vh'
-        align='start'
-        padding='100px 0 0 0'
+        //align='start'
+        padding='20px 0'
       >
         {user && <CookiesModal />}
         <NoiseDiv className='noise' />
@@ -45,12 +45,17 @@ export const Home = () => {
           laptopWidth='60%'
           dir='column'
           tabletDir='row'
-          gap='50px'
+          gap='40px'
+          justify='start'
           align='start'
           z='100'
-          margin='20px 0 0 0'
+          margin='0'
         >
-          <StyledImage width='200px' src={logo}></StyledImage>
+          <StyledImage
+            width='150px'
+            tabletWidth='200px'
+            src={logo}
+          ></StyledImage>
           <FlexDiv dir='column'>
             <StyledH1
               fontSize='52px'

@@ -116,7 +116,7 @@ export const AboutPage = () => {
                     <StyledH5 fontSize='18px'>Freelance, Tingloef</StyledH5>
                   </FlexDiv>
                 </FlexDiv>
-                <StyledP>
+                <StyledP margin='-8px 0 0 0'>
                   juni 2022 - present | Stockholm <br />
                   Consulting via Academic Work developing a React Native app
                   from scratch for Resistant Minds Handelsbolag. Some of the
@@ -124,13 +124,13 @@ export const AboutPage = () => {
                   location triggered events, time tracker and a stored
                   HighScore.
                 </StyledP>
-                <FlexDiv justify='start'>
+                <FlexDiv justify='start' margin='20px 0 0 0'>
                   <RxDotFilled />
                   <StyledH5 fontSize='18px'>
                     App Developer Consultant, Academic Work
                   </StyledH5>
                 </FlexDiv>
-                <StyledP>
+                <StyledP margin='-8px 0 0 0'>
                   nov 2021 - june 2022 | Stockholm <br />
                   Consulting via Academic Work developing a React Native app
                   from scratch for Resistant Minds Handelsbolag. Some of the
@@ -138,13 +138,13 @@ export const AboutPage = () => {
                   location triggered events, time tracker and a stored
                   HighScore.
                 </StyledP>
-                <FlexDiv justify='start'>
+                <FlexDiv justify='start' margin='20px 0 0 0'>
                   <RxDotFilled />
                   <StyledH5 fontSize='18px'>
                     Project &#38; Marketing manager, Jubel
                   </StyledH5>
                 </FlexDiv>
-                <StyledP>
+                <StyledP margin='-8px 0 0 0'>
                   aug 2018 - july 2021 | Stockholm <br />
                   At Jubel I got the chance to work with many fantastic artists
                   and their music. As a project manager and later marketing
@@ -165,7 +165,7 @@ export const AboutPage = () => {
                     </StyledH5>
                   </FlexDiv>
                 </FlexDiv>
-                <StyledP>
+                <StyledP margin='-8px 0 0 0'>
                   aug 2021 | present | Stockholm <br />
                   Studying Front End Developer at Medieinstitutet givs you the
                   skills to use the programming languages and web technology

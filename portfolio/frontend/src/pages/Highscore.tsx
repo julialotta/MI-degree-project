@@ -46,7 +46,9 @@ export const HighscorePage = () => {
       >
         <NoiseDiv className='noise' />
         {isLoading ? (
-          <Loader />
+          <FlexDiv height='50vh'>
+            <Loader />
+          </FlexDiv>
         ) : (
           <>
             <FlexDiv
@@ -82,50 +84,52 @@ export const HighscorePage = () => {
                       borderRad='50%'
                     />
                     <StyledH3>Highscore Jullan DeBugger</StyledH3>
+                    <StyledButton color='black' hovercolor='black'>
+                      <StyledA
+                        fontSize='14px'
+                        href='http://127.0.0.1:5500/game/'
+                      >
+                        Spela
+                      </StyledA>
+                    </StyledButton>
                   </FlexDiv>
-                  <FlexDiv
-                    dir='column'
-                    margin='5px'
-                    justify='start'
-                    align='start'
-                  >
-                    <FlexDiv width='500px' align='start' justify='start'>
-                      <StyledP display='inline' fontSize='22px'>
-                        <strong>Namn</strong>
-                      </StyledP>
-                      <StyledP display='inline' fontSize='22px'>
-                        {" "}
-                        <strong>Poäng</strong>
-                      </StyledP>
-                    </FlexDiv>
-                    <FlexDiv></FlexDiv>
-                  </FlexDiv>
-                  {highScores?.map((score: IHighscore, i: number) => (
-                    <FlexDiv
-                      dir='column'
-                      margin='5px'
-                      key={score._id}
-                      justify='start'
-                      align='start'
-                    >
-                      <FlexDiv background='black' height='0.5px' />
-                      <FlexDiv width='500px' align='start' justify='start'>
-                        <StyledP display='inline' fontSize='20px'>
-                          {i + 1}. {score.name}
+                  <FlexDiv width='60%' dir='column'>
+                    <FlexDiv dir='column' margin='5px' align='start'>
+                      <FlexDiv width='500px'>
+                        <StyledP display='inline' fontSize='22px'>
+                          <strong>Namn</strong>
                         </StyledP>
-                        <StyledP display='inline' fontSize='20px'>
+                        <StyledP display='inline' fontSize='22px'>
                           {" "}
-                          {score.score}
+                          <strong>Poäng</strong>
                         </StyledP>
                       </FlexDiv>
-                      <FlexDiv></FlexDiv>
                     </FlexDiv>
-                  ))}
-                  <StyledButton color='black' hovercolor='black'>
-                    <StyledA fontSize='14px' href='http://127.0.0.1:5500/game/'>
-                      Spela
-                    </StyledA>
-                  </StyledButton>
+                    {highScores?.map((score: IHighscore, i: number) => (
+                      <FlexDiv
+                        dir='column'
+                        margin='5px'
+                        key={score._id}
+                        align='start'
+                      >
+                        <FlexDiv
+                          background='black'
+                          height='0.5px'
+                          margin='0 0 10px 0'
+                        />
+                        <FlexDiv width='500px'>
+                          <StyledP display='inline' fontSize='20px'>
+                            {i + 1}. {score.name}
+                          </StyledP>
+                          <StyledP display='inline' fontSize='20px'>
+                            {" "}
+                            {score.score}
+                          </StyledP>
+                        </FlexDiv>
+                        <FlexDiv></FlexDiv>
+                      </FlexDiv>
+                    ))}
+                  </FlexDiv>
                 </FlexDiv>
               </FlexDiv>
             </FlexDiv>

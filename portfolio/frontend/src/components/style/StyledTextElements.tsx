@@ -93,11 +93,12 @@ export const StyledNavLink = styled(NavLink)`
   margin: ${(props: IStylingProps) => props.margin || "5px"};
   text-shadow: ${(props: IStylingProps) => props.shadow || 0};
   text-decoration: none;
+  z-index: 2;
   :hover {
     color: ${(props: IStylingProps) => props.hovercolor || props.color};
   }
   &.active {
-    color: ${colors.red};
+    color: ${colors.black};
   }
 `;
 

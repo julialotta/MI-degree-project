@@ -11,6 +11,7 @@ export const FlexDiv = styled.div`
   flex-wrap: ${(props: IStylingProps) => props.wrap || "nowrap"};
   background-color: ${(props: IStylingProps) => props.background || "none"};
   width: ${(props: IStylingProps) => props.width || "100%"};
+  overflow: ${(props: IStylingProps) => props.overflow || "visible"};
   height: ${(props: IStylingProps) => props.height || "100%"};
   top: ${(props: IStylingProps) => props.top || ""};
   left: ${(props: IStylingProps) => props.left || ""};

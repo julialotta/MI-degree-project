@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { colors } from "./style/Mixins";
 export const Loader = styled.div`
   display: inline-block;
   width: 100px;
@@ -13,7 +13,7 @@ export const Loader = styled.div`
     margin: 8px;
     border-radius: 50%;
     border: 6px solid #fff;
-    border-color: #fff transparent #fff transparent;
+    border-color: ${colors.white} transparent ${colors.white} transparent;
     animation: lds-dual-ring 1.2s linear infinite;
   }
   @keyframes lds-dual-ring {

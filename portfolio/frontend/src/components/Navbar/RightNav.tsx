@@ -39,12 +39,16 @@ const RightNav = (props: IProps) => {
   return (
     <Ul ultransform={props.open ? "translateX(0)" : "translateX(100%)"}>
       <li>
-        <StyledNavLink hovercolor={colors.red} fontSize='25px' to={"/projects"}>
+        <StyledNavLink
+          hovercolor={colors.black}
+          fontSize='25px'
+          to={"/projects"}
+        >
           Projects
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink hovercolor={colors.red} fontSize='25px' to={"/about"}>
+        <StyledNavLink hovercolor={colors.black} fontSize='25px' to={"/about"}>
           About
         </StyledNavLink>
       </li>

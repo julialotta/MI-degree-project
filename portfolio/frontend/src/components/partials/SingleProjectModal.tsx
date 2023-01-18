@@ -22,10 +22,9 @@ export const modalStyles = {
     top: "50%",
     right: "auto",
     bottom: "auto",
-
     transform: "translate(-50%, -50%)",
     background: colors.white,
-    zIndex: "1000",
+    zIndex: 999,
   },
 };
 
@@ -56,71 +55,70 @@ export const ProjectModal = (props: IOpen) => {
       contentLabel='Projekt'
       style={modalStyles}
     >
-      <FlexDiv dir='column' width={"100%"}>
-        {isLoading ? (
-          <FlexDiv margin='30px'>
-            <Loader />
-          </FlexDiv>
-        ) : (
-          <>
-            <FlexDiv dir='column' tabletDir='row'>
-              <FlexDiv>
-                <StyledImage
-                  borderRad='7px'
-                  width='30%'
-                  tabletWidth='40%'
-                  height='30%'
-                  tabletHeight='40%'
-                  hover='pointer'
-                  src={proj?.image}
-                />
-              </FlexDiv>
-              <FlexDiv dir='column' align='start'>
-                <StyledH2 margin='0 0 0 5px' fontSize='34px'>
-                  {proj?.name}
-                </StyledH2>
-                <StyledP color={colors.black}>{proj?.longDescription}</StyledP>
-                <StyledH5>Tech:</StyledH5>
-                <FlexDiv justify='start' wrap='wrap'>
-                  {proj?.tech.map((tech: string, i: number) => (
-                    <FlexDiv
-                      height='min-content'
-                      width='max-content'
-                      margin='5px'
-                      key={i}
-                    >
-                      <FlexDiv border='1px solid black' borderRad='3px'>
-                        <StyledP fontSize='12px'>{tech}</StyledP>
-                      </FlexDiv>
+      {isLoading ? (
+        <FlexDiv margin='30px'>
+          <Loader />
+        </FlexDiv>
+      ) : (
+        <>
+          <FlexDiv dir='column' tabletDir='row' gap='20px'>
+            <FlexDiv>
+              <StyledImage
+                borderRad='7px'
+                tabletWidth='100%'
+                tabletHeight='100%'
+                height='60%'
+                width='60%'
+                hover='pointer'
+                src={proj?.image}
+              />
+            </FlexDiv>
+            <FlexDiv dir='column' align='start' gap='5px'>
+              <StyledH2 margin='0 0 0 5px' fontSize='34px'>
+                {proj?.name}
+              </StyledH2>
+              <StyledH5>About:</StyledH5>
+              <StyledP color={colors.black}>{proj?.longDescription}</StyledP>
+              <StyledH5>Tech:</StyledH5>
+              <FlexDiv justify='start' wrap='wrap'>
+                {proj?.tech.map((tech: string, i: number) => (
+                  <FlexDiv
+                    height='min-content'
+                    width='max-content'
+                    margin='5px'
+                    key={i}
+                  >
+                    <FlexDiv border='1px solid black' borderRad='3px'>
+                      <StyledP fontSize='12px'>{tech}</StyledP>
                     </FlexDiv>
-                  ))}
-                </FlexDiv>
-                <StyledH5>Links:</StyledH5>
-                <FlexDiv justify='start'>
-                  {proj?.link && (
-                    <StyledA
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      href={proj?.link}
-                    >
-                      <AiOutlineLink />
-                    </StyledA>
-                  )}
-                  {proj?.github && (
-                    <StyledA
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      href={proj?.github}
-                    >
-                      <FaGithub />
-                    </StyledA>
-                  )}
-                </FlexDiv>
+                  </FlexDiv>
+                ))}
+              </FlexDiv>
+              <StyledH5>Links:</StyledH5>
+              <FlexDiv justify='start'>
+                {proj?.link && (
+                  <StyledA
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={proj?.link}
+                  >
+                    <AiOutlineLink />
+                  </StyledA>
+                )}
+                {proj?.github && (
+                  <StyledA
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={proj?.github}
+                  >
+                    <FaGithub />
+                  </StyledA>
+                )}
               </FlexDiv>
             </FlexDiv>
-          </>
-        )}
-      </FlexDiv>
+          </FlexDiv>
+        </>
+      )}
     </Modal>
   );
 };
