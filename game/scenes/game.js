@@ -174,12 +174,10 @@ export default function game({ levelIdx, score, name }) {
   //player slides down tube
   player.onCollide("tube", () => {
     onKeyPress("down", () => {
+      music.pause();
       if (levelIdx === levels.length - 1) {
-        music.pause();
-
         go("win", { score: scoreLabel.value, name: name });
       } else {
-        music.pause();
         go("game", {
           levelIdx: levelIdx + 1,
           score: scoreLabel.value,

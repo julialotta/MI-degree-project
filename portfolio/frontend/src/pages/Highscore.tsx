@@ -122,10 +122,7 @@ export const HighscorePage = () => {
                     </FlexDiv>
                   ))}
                   <StyledButton color='black' hovercolor='black'>
-                    <StyledA
-                      fontSize='14px'
-                      href='https://www.jullan.tingloef.se/'
-                    >
+                    <StyledA fontSize='14px' href='http://127.0.0.1:5500/game/'>
                       Spela
                     </StyledA>
                   </StyledButton>
