@@ -4,9 +4,15 @@
   "description": "",
   "main": "game.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress": "npx cypress run"
   },
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "cypress": "^4.12.1",
+    "cypress-plugin-snapshots": "^1.4.4",
+    "js-base64": "^2.5.2"
+  }
 }

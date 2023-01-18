@@ -15,6 +15,13 @@ kaboom({
   debug: true,
   background: [210, 242, 221],
 });
+let canvas = document.querySelector("canvas");
+
+canvas.id = "kaboom";
+
+/*
+
+canvas.setAttribute("id", "kaboom"); */
 
 //SOUNDS
 loadSound("ohno", "assets/sounds/ohno.mp3");

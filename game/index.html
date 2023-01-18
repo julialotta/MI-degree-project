@@ -26,16 +26,19 @@
       <a href="http://127.0.0.1:5500/game/"> <h1>Jullan DeBugger</h1> </a>
 
       <nav>
-        <a href="http://localhost:3000/projects">Tillbaka</a>
+        <a href="http://localhost:3000/projects" data-cy="back">Tillbaka</a>
         <a
           target="_blank"
           rel="noopener noreferrer"
+          data-cy="highscore"
           href="http://localhost:3000/highscore"
           >Highscore</a
         >
       </nav>
     </header>
-    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+    <script src="https://unpkg.com/kaboom/dist/kaboom.js">
+      <canvas id="kaboom"> </canvas>
+    </script>
     <script type="module" src="index.js"></script>
   </body>
 </html>

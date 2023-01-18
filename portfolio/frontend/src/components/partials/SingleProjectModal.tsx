@@ -98,6 +98,7 @@ export const ProjectModal = (props: IOpen) => {
               <FlexDiv justify='start'>
                 {proj?.link && (
                   <StyledA
+                    data-cy='website'
                     target='_blank'
                     rel='noopener noreferrer'
                     href={proj?.link}

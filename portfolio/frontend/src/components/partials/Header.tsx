@@ -14,7 +14,7 @@ export const Header = () => {
       <ScrollDiv as={motion.div} style={{ scaleX: scrollYProgress }} />
       <FlexDiv height='100px'>
         <FlexDiv margin='10px 20px' align='center' z='1'>
-          <StyledNavLink to={"/"}>
+          <StyledNavLink to={"/"} data-cy='homelink'>
             <StyledImage
               width='200px'
               height='none'

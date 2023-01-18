@@ -116,6 +116,7 @@ export const ProjectsPage = () => {
                           }}
                           onMouseOver={() => setImage(p.image)}
                           key={p._id}
+                          data-cy={p._id}
                           margin='5px 5px 0px 5px'
                           hover='pointer'
                         >

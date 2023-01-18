@@ -1,6 +1,5 @@
 import addButton from "../functions/addButton.js";
 import addInput from "../functions/addInput.js";
-import saveScore from "../functions/saveScore.js";
 
 export default function start() {
   layers(["bg", "game", "ui"], "game");
