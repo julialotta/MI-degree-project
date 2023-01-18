@@ -25,7 +25,7 @@ export default function start() {
   addButton("Starta spelet", "", vec2(center().x, center().y - 100), () => {
     music.pause();
     if (alias.isName().length > 0) {
-      go("game", { levelIdx: 5, score: 0, name: alias.isName() });
+      go("game", { levelIdx: 0, score: 0, name: alias.isName() });
     } else {
       ops.text = "Oops, ange ett alias!";
     }

@@ -46,6 +46,9 @@ export const StyledH3 = styled.h3`
     font-size: ${(props: IStylingProps) =>
       props.tabletFontSize || props.fontSize};
   }
+  :hover {
+    cursor: ${(props: IStylingProps) => props.hover || "default"};
+  }
 `;
 
 export const StyledH5 = styled.h5`

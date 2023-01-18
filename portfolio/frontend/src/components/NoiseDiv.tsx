@@ -13,8 +13,7 @@ export const NoiseDiv = styled.div`
   -webkit-animation: grain 7s steps(10) infinite;
   background-size: 200px;
   height: 600%;
-  z-index: 1;
-
+  z-index: 0;
   width: 600%;
   top: -300%;
   left: -150%;

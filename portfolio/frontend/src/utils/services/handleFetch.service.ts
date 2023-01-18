@@ -13,7 +13,7 @@ export async function fetchTech(): Promise<String[]> {
 }
 
 export async function fetchProjectByID(id: string): Promise<IProjects> {
-  const url: string = `${process.env.REACT_APP_BOOKINGS_URI}/` + id;
+  const url: string = `${process.env.REACT_APP_PROJECTSBYID_URI}/` + id;
   return (await get<IProjects>(url)).data;
 }
 

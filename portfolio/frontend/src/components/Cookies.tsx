@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
 import { StyledButton } from "./style/StyledButton";
-import { StyledH3, StyledP } from "./style/StyledTextElements";
+import { StyledH3, StyledNavLink, StyledP } from "./style/StyledTextElements";
 import { GlobalStyle } from "./style/fonts";
 import { colors } from "./style/Mixins";
 import { FlexDiv } from "./style/Wrappers";
@@ -28,7 +27,9 @@ export const CookiesPage = () => {
           dir='column'
         >
           <StyledButton margin='0 0 30px 0' background='black'>
-            <Link to='/'>Tillbaka</Link>
+            <StyledNavLink fontSize='20px' to='/'>
+              ←
+            </StyledNavLink>
           </StyledButton>
           <StyledH3 color={colors.black}>
             Så använder vi kakor <br />

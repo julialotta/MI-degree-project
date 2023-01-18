@@ -6,27 +6,28 @@ import { NotFound } from "./components/NotFound";
 import { AboutPage } from "./pages/AboutPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
 import { Home } from "./pages/Home";
-import { SingleProjectPage } from "./pages/SingleProject";
 import { AnimatePresence } from "framer-motion";
 import { AdminPage } from "./pages/Admin";
 import { HighscorePage } from "./pages/Highscore";
+import ScrollToTop from "./components/ScrollToTop";
 function App() {
   const location = useLocation();
 
   return (
     <AnimatePresence initial={false} mode='wait'>
-      <Routes key={location.pathname} location={location.pathname}>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='about' element={<AboutPage />} />
-          <Route path='projects' element={<ProjectsPage />} />
-          <Route path='projects/:id' element={<SingleProjectPage />} />
-          <Route path='admin' element={<AdminPage />}></Route>
-          <Route path='highscore' element={<HighscorePage />}></Route>
-          <Route path='cookies' element={<CookiesPage />}></Route>
-          <Route path='*' element={<NotFound />}></Route>
-        </Route>
-      </Routes>
+      <ScrollToTop>
+        <Routes key={location.pathname} location={location.pathname}>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path='about' element={<AboutPage />} />
+            <Route path='projects' element={<ProjectsPage />} />
+            <Route path='admin' element={<AdminPage />} />
+            <Route path='highscore' element={<HighscorePage />} />
+            <Route path='cookies' element={<CookiesPage />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
+        </Routes>
+      </ScrollToTop>
     </AnimatePresence>
   );
 }

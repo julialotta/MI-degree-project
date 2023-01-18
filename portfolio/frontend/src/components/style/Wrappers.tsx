@@ -12,6 +12,8 @@ export const FlexDiv = styled.div`
   background-color: ${(props: IStylingProps) => props.background || "none"};
   width: ${(props: IStylingProps) => props.width || "100%"};
   height: ${(props: IStylingProps) => props.height || "100%"};
+  top: ${(props: IStylingProps) => props.top || ""};
+  left: ${(props: IStylingProps) => props.left || ""};
 
   gap: ${(props: IStylingProps) => props.gap || "0"};
   margin: ${(props: IStylingProps) => props.margin || "0"};
@@ -26,8 +28,6 @@ export const FlexDiv = styled.div`
   right: ${(props: IStylingProps) => props.right || "x"};
   box-shadow: ${(props: IStylingProps) => props.shadow || 0};
   min-height: ${(props: IStylingProps) => props.minHeight || 0};
-  overflow-x: ${(props: IStylingProps) => props.overflowX || "visible"};
-  overflow-y: ${(props: IStylingProps) => props.overflowY || "visible"};
   :hover {
     cursor: ${(props: IStylingProps) => props.hover || "default"};
   }
@@ -55,19 +55,23 @@ export const FlexDiv = styled.div`
       props.laptopHeight || props.tabletHeight};
   }
 `;
-
-export const ImageDiv = styled(FlexDiv)`
-  background-image: url(${(props: IStylingProps) => props.image || ""});
-  background-size: 100%;
-  background-repeat: no-repeat;
-  opacity: ${(props: IStylingProps) => props.opacity || "100"};
+export const ScrollDiv = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: black;
+  z-index: 100;
+  transform-origin: 0%;
 `;
 
 export const AppWrapper = styled.div`
   background-color: ${colors.white};
   width: 100%;
-  min-height: min-content;
+  min-height: 100vh;
   padding: 0;
   margin: 0;
+  scroll-behavior: smooth;
   overflow: hidden;
 `;

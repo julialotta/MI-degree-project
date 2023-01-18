@@ -3,7 +3,14 @@ import { Loader } from "../components/Loader";
 import { NoiseDiv } from "../components/NoiseDiv";
 import { GlobalStyle } from "../components/style/fonts";
 import { colors } from "../components/style/Mixins";
-import { StyledNavLink, StyledP } from "../components/style/StyledTextElements";
+import { StyledButton } from "../components/style/StyledButton";
+import { StyledImage } from "../components/style/StyledImage";
+import {
+  StyledA,
+  StyledH3,
+  StyledNavLink,
+  StyledP,
+} from "../components/style/StyledTextElements";
 import { FlexDiv } from "../components/style/Wrappers";
 
 import { IHighscore } from "../models/IHighscore";
@@ -17,7 +24,6 @@ export const HighscorePage = () => {
     async function getTEch() {
       setIsLoading(true);
       const fetchedScore = await fetchHighscore();
-      console.log("fetchedScore", fetchedScore);
 
       setHighscore(fetchedScore);
       if (fetchedScore !== undefined) setIsLoading(false);
@@ -52,26 +58,77 @@ export const HighscorePage = () => {
               align='start'
               gap='20px'
             >
-              <StyledNavLink to='/'>Tillbaka</StyledNavLink>
-
+              <StyledNavLink fontSize='20px' to='/'>
+                ←
+              </StyledNavLink>
               <FlexDiv
                 dir='column'
                 justify='start'
-                align='start'
+                align='center'
                 gap='30px'
                 margin='0 30px 0 0'
               >
-                <FlexDiv dir='column' justify='start' width='100%' wrap='wrap'>
-                  {highScores?.map((score: IHighscore, i: number) => (
-                    <FlexDiv dir='column' margin='5px' key={score._id}>
-                      <FlexDiv background='black' height='0.5px' dir='column' />
-
-                      <StyledP fontSize='20px'>
+                <FlexDiv
+                  dir='column'
+                  justify='center'
+                  align='center'
+                  width='60%'
+                  wrap='wrap'
+                >
+                  <FlexDiv justify='start' gap='30px' margin='0 0 20px 0'>
+                    <StyledImage
+                      src='/game.png'
+                      width='120px'
+                      borderRad='50%'
+                    />
+                    <StyledH3>Highscore Jullan DeBugger</StyledH3>
+                  </FlexDiv>
+                  <FlexDiv
+                    dir='column'
+                    margin='5px'
+                    justify='start'
+                    align='start'
+                  >
+                    <FlexDiv width='500px' align='start' justify='start'>
+                      <StyledP display='inline' fontSize='22px'>
+                        <strong>Namn</strong>
+                      </StyledP>
+                      <StyledP display='inline' fontSize='22px'>
                         {" "}
-                        {i + 1}. {score.name} - {score.score}
+                        <strong>Poäng</strong>
                       </StyledP>
                     </FlexDiv>
+                    <FlexDiv></FlexDiv>
+                  </FlexDiv>
+                  {highScores?.map((score: IHighscore, i: number) => (
+                    <FlexDiv
+                      dir='column'
+                      margin='5px'
+                      key={score._id}
+                      justify='start'
+                      align='start'
+                    >
+                      <FlexDiv background='black' height='0.5px' />
+                      <FlexDiv width='500px' align='start' justify='start'>
+                        <StyledP display='inline' fontSize='20px'>
+                          {i + 1}. {score.name}
+                        </StyledP>
+                        <StyledP display='inline' fontSize='20px'>
+                          {" "}
+                          {score.score}
+                        </StyledP>
+                      </FlexDiv>
+                      <FlexDiv></FlexDiv>
+                    </FlexDiv>
                   ))}
+                  <StyledButton color='black' hovercolor='black'>
+                    <StyledA
+                      fontSize='14px'
+                      href='https://www.jullan.tingloef.se/'
+                    >
+                      Spela
+                    </StyledA>
+                  </StyledButton>
                 </FlexDiv>
               </FlexDiv>
             </FlexDiv>

@@ -17,7 +17,7 @@ const StyledBurger = styled.div`
   align-items: center;
   flex-flow: column;
   cursor: pointer;
-  z-index: 3;
+  z-index: 2;
 
   div {
     width: 3rem;

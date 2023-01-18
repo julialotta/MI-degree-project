@@ -3,7 +3,11 @@ import { device } from "./Mixins";
 import { IStylingProps } from "./StyledInterface";
 
 export const StyledImage = styled.img`
+  position: ${(props: IStylingProps) => props.position || "static"};
   width: ${(props: IStylingProps) => props.width || "100%"};
+  top: ${(props: IStylingProps) => props.top || ""};
+  left: ${(props: IStylingProps) => props.left || ""};
+  display: flex;
   margin: ${(props: IStylingProps) => props.margin || "0"};
   height: ${(props: IStylingProps) => props.height || "100%"};
   min-height: ${(props: IStylingProps) => props.minHeight || "x"};

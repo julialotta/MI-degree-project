@@ -1,20 +1,33 @@
+import React, { useEffect, useState } from "react";
 import { NoiseDiv } from "../components/NoiseDiv";
 import { GlobalStyle } from "../components/style/fonts";
 import { colors } from "../components/style/Mixins";
 import { StyledImage } from "../components/style/StyledImage";
 import {
-  StyledA,
   StyledH2,
+  StyledH3,
   StyledH5,
   StyledP,
 } from "../components/style/StyledTextElements";
 import { FlexDiv } from "../components/style/Wrappers";
-import { projects } from "../data/projects";
-import React, { useEffect, useState } from "react";
+import { ProjectModal } from "../components/partials/SingleProjectModal";
+import { IProjects } from "../models/IProjects";
+import { fetchProjects } from "../utils/services/handleFetch.service";
 
 export const ProjectsPage = () => {
   const [image, setImage] = useState("/JL.png");
   const [projectTags, setProjectTags] = useState<string[]>([]);
+  const [projects, setProjects] = useState<IProjects[]>([]);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    async function getProjects() {
+      const projs = await fetchProjects();
+      setProjects(projs);
+    }
+    getProjects();
+  }, []);
 
   //ADDING DIFFERENT CATEGORIES(tags) OF PROJECTS
   useEffect(() => {
@@ -25,7 +38,7 @@ export const ProjectsPage = () => {
       }
     }
     setProjectTags(tempArray);
-  }, []);
+  }, [projects]);
 
   return (
     <>
@@ -36,51 +49,60 @@ export const ProjectsPage = () => {
         minHeight='100vh'
         align='start'
       >
+        <ProjectModal id={id} open={open} setOpen={() => setOpen(false)} />
         <NoiseDiv className='noise' />
         <FlexDiv
-          margin='30px 50px'
+          margin='30px 50px 70px 50px'
           height='100%'
           z='1'
           align='start'
           gap='50px'
+          dir='column'
+          tabletDir='row'
         >
-          <FlexDiv margin='40px 0 0 0'>
+          <FlexDiv height='350px' position='sticky' top='70px' left='40px'>
             <StyledImage
               borderRad='2px'
-              width='70%'
+              width='x'
+              height='330px'
+              tabletHeight='400px'
               hover='pointer'
               src={image}
-            ></StyledImage>
+            />
           </FlexDiv>
-          <FlexDiv
-            dir='column'
-            justify='start'
-            align='start'
-            gap='40px'
-            overflowY='scroll'
-          >
+
+          <FlexDiv dir='column' justify='start' align='start' gap='40px'>
             <FlexDiv align='end' gap='5px'>
               <StyledH2 textAlign='left'>Projects </StyledH2>
               <StyledP>{projects.length}</StyledP>
             </FlexDiv>
             <FlexDiv gap='20px' dir='column'>
               {projectTags.map((pt) => (
-                <FlexDiv dir='column' align='start' key={pt}>
+                <FlexDiv dir='column' align='start' key={pt} margin='5px 0 0 0'>
                   <StyledH5 key={pt}>{pt}</StyledH5>
                   <FlexDiv background='black' height='0.5px' />
 
                   {projects.map(
                     (p) =>
                       p.tag === pt && (
-                        <FlexDiv dir='column' align='start' gap='15px'>
-                          <StyledA
+                        <FlexDiv
+                          dir='column'
+                          align='start'
+                          gap='15px'
+                          margin='30px 0 0 0'
+                        >
+                          <StyledH3
+                            onClick={() => {
+                              setOpen(true);
+                              setId(p._id);
+                            }}
                             onMouseOver={() => setImage(p.image)}
                             key={p._id}
-                            href={"projects/" + p._id}
-                            margin='20px 5px 0px 5px'
+                            margin='5px 5px 0px 5px'
+                            hover='pointer'
                           >
                             {p.name}
-                          </StyledA>
+                          </StyledH3>
                           <StyledP margin='0 0 0 5px'>{p.description}</StyledP>
                           <FlexDiv justify='start' width='100%' wrap='wrap'>
                             {p.tech.map((tech: string, i: number) => (

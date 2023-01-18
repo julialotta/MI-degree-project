@@ -10,11 +10,7 @@ export const get_portfolioProjectsController = async (
   const projects = await ProjectModel.find();
 
   try {
-    res.status(200).json({
-      status: statusSuccess,
-      message: "Portfolioprojekten hämtades",
-      data: projects,
-    });
+    res.status(200).json(projects);
   } catch (error: any) {
     res.status(500).json({
       status: statusFailed,
@@ -29,11 +25,7 @@ export const get_portfolioProjectByIDController = async (
 ) => {
   const projectById = await ProjectModel.findById(req.params.id);
   try {
-    res.status(200).json({
-      status: statusSuccess,
-      message: "Find project by id works",
-      data: projectById,
-    });
+    res.status(200).json(projectById);
   } catch (error: any) {
     res.status(500).json({
       status: statusFailed,
