@@ -12,7 +12,7 @@ import { IProjects } from "../../models/IProjects";
 import { StyledImage } from "../style/StyledImage";
 import { fetchProjectByID } from "../../utils/services/handleFetch.service";
 import { Loader } from "../Loader";
-import { CgWebsite } from "react-icons/cg";
+import { AiOutlineLink } from "react-icons/ai";
 import { FaGithub } from "react-icons/fa";
 
 export const modalStyles = {
@@ -47,7 +47,7 @@ export const ProjectModal = (props: IOpen) => {
       setProj(project);
       setIsLoading(false);
     }
-    getProject();
+    if (props.id !== "") getProject();
   }, [props.id]);
   return (
     <Modal
@@ -103,7 +103,7 @@ export const ProjectModal = (props: IOpen) => {
                       rel='noopener noreferrer'
                       href={proj?.link}
                     >
-                      <CgWebsite />
+                      <AiOutlineLink />
                     </StyledA>
                   )}
                   {proj?.github && (

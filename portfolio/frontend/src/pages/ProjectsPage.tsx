@@ -90,6 +90,7 @@ export const ProjectsPage = () => {
                           align='start'
                           gap='15px'
                           margin='30px 0 0 0'
+                          key={p._id}
                         >
                           <StyledH3
                             onClick={() => {
