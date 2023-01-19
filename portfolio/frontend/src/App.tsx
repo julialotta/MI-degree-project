@@ -14,7 +14,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <AnimatePresence initial={false} mode='wait'>
+    <AnimatePresence mode='wait'>
       <ScrollToTop>
         <Routes key={location.pathname} location={location.pathname}>
           <Route path='/' element={<Layout />}>

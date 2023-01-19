@@ -38,10 +38,17 @@ export const AboutPage = () => {
     <>
       <GlobalStyle />
 
-      <FlexDiv background={colors.orange} minHeight='100vh' padding='10px'>
+      <FlexDiv
+        background={colors.orange}
+        minHeight='100vh'
+        padding='50px 10px 10px 10px'
+        align='start'
+      >
         <NoiseDiv className='noise' />
         {isLoading ? (
-          <Loader />
+          <FlexDiv>
+            <Loader />
+          </FlexDiv>
         ) : (
           <>
             <FlexDiv dir='column' margin='10px 0 0 0'>

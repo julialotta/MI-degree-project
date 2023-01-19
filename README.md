@@ -19,6 +19,21 @@
 
 - KaboomJS
 
+## Run the project:
+
+Frontend:
+cd portfolio
+cd frontend
+npm run start
+
+Backend:
+cd portfolio
+cd backend
+npm run dev
+
+Game:
+Use npx serve or Live server
+
 ## Contributors
 
 [Julia-Lotta Tinglöf](https://github.com/julialotta) </br>
